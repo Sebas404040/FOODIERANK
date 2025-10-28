@@ -1,6 +1,7 @@
 import { obtenerBD } from "../config/db.js";
 
 const COLECCION_RESENAS_PLATOS = "resenas_platos";
+const COLECCION_PLATOS = "platos";
 
 export async function obtenerResenasPlatos() {
     try {
@@ -45,6 +46,21 @@ export async function eliminarResenaPlato(id) {
         return await obtenerBD().collection(COLECCION_RESENAS_PLATOS).deleteOne({ id: id });
     } catch (error) {
         throw new Error("Error al eliminar la reseña de plato: " + error.message);
+    }
+}
+
+export async function obtenerResenasPlatoPorId(platoId) {
+    try {
+        const platoExistente = await obtenerBD().collection(COLECCION_PLATOS).findOne({ id: platoId });
+
+        if (!platoExistente) {
+            throw new Error("Plato no encontrado");
+        }
+
+        return await obtenerBD().collection(COLECCION_RESENAS_PLATOS).find({ platoId: platoId }).toArray();
+
+    } catch (error) {
+        throw new Error("Error al obtener las reseñas del plato: " + error.message);
     }
 }
 

@@ -1,6 +1,7 @@
 import { obtenerBD } from "../config/db.js";
 
 const COLECCION_RESENAS_RESTAURANTES = "resenas_restaurantes";
+const COLECCION_RESTAURANTES = "restaurantes";
 
 export async function obtenerResenasRestaurantes() {
     try {
@@ -45,6 +46,21 @@ export async function eliminarResenaRestaurante(id) {
         return await obtenerBD().collection(COLECCION_RESENAS_RESTAURANTES).deleteOne({ id: parseInt(id) });
     } catch (error) {
         throw new Error("Error al eliminar la reseña de restaurante: " + error.message);
+    }
+}
+
+export async function obtenerResenasRestaurantePorId(restauranteId) {
+    try {
+        const restauranteExistente = await obtenerBD().collection(COLECCION_RESTAURANTES).findOne({ id: restauranteId });
+
+        if (!restauranteExistente) {
+            throw new Error("Restaurante no encontrado");
+        }
+
+        return await obtenerBD().collection(COLECCION_RESENAS_RESTAURANTES).find({ restauranteId: restauranteId }).toArray();
+
+    } catch (error) {
+        throw new Error("Error al obtener las reseñas del restaurante: " + error.message);
     }
 }
 
