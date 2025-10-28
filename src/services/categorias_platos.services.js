@@ -13,7 +13,23 @@ export async function obtenerCategoriasPlatos() {
 
 export async function crearCategoriaPlato(categoria) {
     try {
-        return await obtenerBD().collection(COLECCION_CATEGORIAS_PLATOS).insertOne(categoria);
+
+        if(!categoria) {
+            throw new Error("El nombre de la categoría es obligatorio");
+        }
+
+        const categoriaExistente = await obtenerBD().collection(COLECCION_CATEGORIAS_PLATOS).findOne({ nombre: categoria });
+
+        if (categoriaExistente) {
+            throw new Error("La categoría de plato ya existe");
+        }
+
+        const ultimoCategoria = await obtenerBD().collection(COLECCION_CATEGORIAS_PLATOS).findOne({}, { sort: { id: -1 } });
+
+        const nuevoId = ultimoCategoria ? ultimoCategoria.id + 1 : 1;
+
+        return await obtenerBD().collection(COLECCION_CATEGORIAS_PLATOS).insertOne({ id: nuevoId, nombre: categoria });
+
     } catch (error) {
         throw new Error("Error al crear la categoría de plato: " + error.message);
     }
