@@ -37,6 +37,10 @@ export async function crearCategoriaRestaurante(categoria) {
 
 export async function eliminarCategoriaRestaurante(id) {
     try {
+        const categoria = await obtenerBD().collection(COLECCION_CATEGORIAS_RESTAURANTES).findOne({ id: id });
+        if (!categoria) {
+            throw new Error("Categoría de restaurante no encontrada");
+        }
         return await obtenerBD().collection(COLECCION_CATEGORIAS_RESTAURANTES).deleteOne({ id: id });
     } catch (error) {
         throw new Error("Error al eliminar la categoría de restaurante: " + error.message);
@@ -45,6 +49,17 @@ export async function eliminarCategoriaRestaurante(id) {
 
 export async function actualizarCategoriaRestaurante(id_restaurante, id_categoriaActualizada) {
     try {
+        const restaurante = await obtenerBD().collection(COLECCION_RESTAURANTES).findOne({ id: id_restaurante });
+        const categoria = await obtenerBD().collection(COLECCION_CATEGORIAS_RESTAURANTES).findOne({ id: id_categoriaActualizada });
+
+        if (!restaurante) {
+            throw new Error("Restaurante no encontrado");
+        }
+
+        if (!categoria) {
+            throw new Error("Categoría de restaurante no encontrada");
+        }
+        
         return await obtenerBD().collection(COLECCION_RESTAURANTES).updateOne(
             { id: id_restaurante },
             { $set: { categoriaId: id_categoriaActualizada } }

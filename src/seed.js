@@ -57,9 +57,9 @@ async function seed() {
     ];
 
     const restaurantes = [
-        { id: 1, nombre: "La Parrilla Feliz", categoriaId: 5, direccion: "Calle 123, Ciudad", imagen_url: "https://example.com/parrilla.jpg"},
-        { id: 2, nombre: "Sabor Gourmet", categoriaId: 2, direccion: "Avenida 456, Ciudad", imagen_url: "https://example.com/gourmet.jpg"},
-        { id: 3, nombre: "Verde Vida", categoriaId: 3, direccion: "Boulevard 789, Ciudad", imagen_url: "https://example.com/vegetariana.jpg"}
+        { id: 1, nombre: "La Parrilla Feliz", categoriaId: 5, direccion: "Calle 123, Ciudad", imagen_url: "https://example.com/parrilla.jpg", descripcion: "Especializados en carnes a la parrilla con un ambiente acogedor."},
+        { id: 2, nombre: "Sabor Gourmet", categoriaId: 2, direccion: "Avenida 456, Ciudad", imagen_url: "https://example.com/gourmet.jpg", descripcion: "Ofrecemos una experiencia culinaria única con platos de autor."},
+        { id: 3, nombre: "Verde Vida", categoriaId: 3, direccion: "Boulevard 789, Ciudad", imagen_url: "https://example.com/vegetariana.jpg", descripcion: "Restaurante vegetariano con opciones saludables y deliciosas."}
     ];
 
     await obtenerBD().collection("categorias_restaurantes").deleteMany();
