@@ -47,10 +47,19 @@ async function seed() {
         { id: 5, platoId: 2, usuarioId: 3, calificacion: 2, comentario: "No me gustó mucho." }
     ];
 
+    const platos = [
+        { id: 1, nombre: "Hamburguesa Clásica", categoriaId: 1, descripcion: "Jugosa hamburguesa con queso, lechuga y tomate.", precio: 8.99, imagen_url: "https://example.com/hamburguesa.jpg", id_restaurante: 1 },
+        { id: 2, nombre: "Ensalada César", categoriaId: 6, descripcion: "Ensalada fresca con aderezo César y crutones.", precio: 6.99, imagen_url: "https://example.com/ensalada.jpg", id_restaurante: 2 },
+        { id: 3, nombre: "Tarta de Queso", categoriaId: 3, descripcion: "Deliciosa tarta de queso con base de galleta.", precio: 5.49, imagen_url: "https://example.com/tarta.jpg", id_restaurante: 3 },
+        { id: 4, nombre: "Filete a la Parrilla", categoriaId: 5, descripcion: "Filete jugoso cocinado a la perfección.", precio: 14.99, imagen_url: "https://example.com/filete.jpg", id_restaurante: 1 },
+        { id: 5, nombre: "Pasta Alfredo", categoriaId: 2, descripcion: "Pasta cremosa con salsa Alfredo y pollo.", precio: 10.99, imagen_url: "https://example.com/pasta.jpg", id_restaurante: 2 },
+        { id: 6, nombre: "Helado de Vainilla", categoriaId: 3, descripcion: "Helado suave y cremoso de vainilla.", precio: 4.49, imagen_url: "https://example.com/helado.jpg", id_restaurante: 3 }
+    ];
+
     const restaurantes = [
-        { id: 1, nombre: "La Parrilla Feliz", categoriaId: 5, direccion: "Calle 123, Ciudad", imagen_url: "https://example.com/parrilla.jpg", platos_ids: [1, 2] },
-        { id: 2, nombre: "Sabor Gourmet", categoriaId: 2, direccion: "Avenida 456, Ciudad", imagen_url: "https://example.com/gourmet.jpg", platos_ids: [3, 4] },
-        { id: 3, nombre: "Verde Vida", categoriaId: 3, direccion: "Boulevard 789, Ciudad", imagen_url: "https://example.com/vegetariana.jpg", platos_ids: [5, 6] }
+        { id: 1, nombre: "La Parrilla Feliz", categoriaId: 5, direccion: "Calle 123, Ciudad", imagen_url: "https://example.com/parrilla.jpg"},
+        { id: 2, nombre: "Sabor Gourmet", categoriaId: 2, direccion: "Avenida 456, Ciudad", imagen_url: "https://example.com/gourmet.jpg"},
+        { id: 3, nombre: "Verde Vida", categoriaId: 3, direccion: "Boulevard 789, Ciudad", imagen_url: "https://example.com/vegetariana.jpg"}
     ];
 
     await obtenerBD().collection("categorias_restaurantes").deleteMany();
