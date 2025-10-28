@@ -3,6 +3,14 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import 'dotenv/config.js';
+import { conectarBD } from './config/db.js';
+import resenasPlatosRouter from './routers/resenas_platos.routes.js';
+import resenasRestaurantesRouter from './routers/resenas_restaurantes.routes.js';
+import categoriasPlatosRouter from './routers/categorias_platos.routes.js';
+import categoriasRestaurantesRouter from './routers/categorias_restaurantes.routes.js';
+import platosRouter from './routers/platos.routes.js';
+import restaurantesRouter from './routers/restaurantes.routes.js';
+import usuariosRouter from './routers/usuarios.routes.js';
 
 const app = express();
 
@@ -24,7 +32,13 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
-
+app.use('/resenas_platos', resenasPlatosRouter);
+app.use('/resenas_restaurantes', resenasRestaurantesRouter);
+app.use('/categorias_platos', categoriasPlatosRouter);
+app.use('/categorias_restaurantes', categoriasRestaurantesRouter);
+app.use('/platos', platosRouter);
+app.use('/restaurantes', restaurantesRouter);
+app.use('/usuarios', usuariosRouter);
 
 app.get("/health", (req, res) => {
     res.status(200).json({ message: "Backend Activo" });
