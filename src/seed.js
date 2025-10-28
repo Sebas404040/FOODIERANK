@@ -31,7 +31,7 @@ async function seed() {
         { id: 5, username: "Santiago", password: "pass101", role: "user", correo: "santiago@example.com", telefono: "3344556677" }
     ];
 
-    const reseñas_restaurantes = [
+    const resenas_restaurantes = [
         { id: 1, restauranteId: 1, usuarioId: 2, calificacion: 5, comentario: "Excelente comida y servicio." },
         { id: 2, restauranteId: 2, usuarioId: 3, calificacion: 4, comentario: "Muy buen ambiente." },
         { id: 3, restauranteId: 3, usuarioId: 4, calificacion: 3, comentario: "Comida aceptable." },
@@ -39,7 +39,7 @@ async function seed() {
         { id: 5, restauranteId: 2, usuarioId: 2, calificacion: 2, comentario: "No cumplió mis expectativas." }
     ];
 
-    const reseñas_platos = [
+    const resenas_platos = [
         { id: 1, platoId: 1, usuarioId: 3, calificacion: 5, comentario: "Delicioso plato." },
         { id: 2, platoId: 2, usuarioId: 4, calificacion: 4, comentario: "Muy sabroso." },
         { id: 3, platoId: 3, usuarioId: 5, calificacion: 3, comentario: "Estuvo bien." },
@@ -74,11 +74,11 @@ async function seed() {
     await obtenerBD().collection("restaurantes").deleteMany();
     await obtenerBD().collection("restaurantes").insertMany(restaurantes);
 
-    await obtenerBD().collection("reseñas_restaurantes").deleteMany();
-    await obtenerBD().collection("reseñas_restaurantes").insertMany(reseñas_restaurantes);
+    await obtenerBD().collection("resenas_restaurantes").deleteMany();
+    await obtenerBD().collection("resenas_restaurantes").insertMany(resenas_restaurantes);
 
-    await obtenerBD().collection("reseñas_platos").deleteMany();
-    await obtenerBD().collection("reseñas_platos").insertMany(reseñas_platos);
+    await obtenerBD().collection("resenas_platos").deleteMany();
+    await obtenerBD().collection("resenas_platos").insertMany(resenas_platos);
 
     await obtenerBD().collection("usuarios").deleteMany();
     await obtenerBD().collection("usuarios").insertMany(usuarios);
