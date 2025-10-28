@@ -9,3 +9,42 @@ export async function obtenerResenasRestaurantes() {
         throw new Error("Error al obtener las reseñas de restaurantes: " + error.message);
     }
 }
+
+export async function agregarResenaRestaurante(datos_resena) {
+    try {
+        const { restauranteId, usuarioId, calificacion, comentario } = datos_resena;
+
+        if (!restauranteId || !usuarioId || !calificacion || !comentario) {
+            throw new Error("Faltan datos obligatorios para agregar la reseña de restaurante.");
+        }
+
+        const ultimoIdResena = await obtenerBD().collection(COLECCION_RESENAS_RESTAURANTES).find().sort({ id: -1 }).limit(1).toArray();
+        const nuevoId = ultimoIdResena.length > 0 ? ultimoIdResena[0].id + 1 : 1;
+
+        const nuevaResena = {
+            id: nuevoId,
+            restauranteId: datos_resena.restauranteId, 
+            usuarioId: datos_resena.usuarioId,
+            calificacion: datos_resena.calificacion,
+            comentario: datos_resena.comentario
+        };
+
+        return await obtenerBD().collection(COLECCION_RESENAS_RESTAURANTES).insertOne(nuevaResena);
+
+    } catch (error) {
+        throw new Error("Error al agregar la reseña de restaurante: " + error.message);
+    }
+}
+
+export async function eliminarResenaRestaurante(id) {
+    try {
+        if (!id) {
+            throw new Error("El ID de la reseña es obligatorio para eliminar.");
+        }
+    
+        return await obtenerBD().collection(COLECCION_RESENAS_RESTAURANTES).deleteOne({ id: parseInt(id) });
+    } catch (error) {
+        throw new Error("Error al eliminar la reseña de restaurante: " + error.message);
+    }
+}
+
