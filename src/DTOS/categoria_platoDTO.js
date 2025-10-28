@@ -6,6 +6,6 @@ export const createCategoriaPlatoDTO = [
 ];
 
 export const updateCategoriaPlatoDTO = [
-    param('id').isNumeric().withMessage('El ID de la categoría en la URL debe ser numérico.'),
-    body('nombre').optional().isString().withMessage('El nombre debe ser una cadena de texto.').isLength({ min: 3, max: 50 }).withMessage('Error en el campo nombre.').trim()
+    param('id_plato').isNumeric().withMessage('El ID de la categoría en la URL debe ser numérico.'),
+    body('id_categoriaActualizada').isNumeric().withMessage('El id_categoriaActualizada debe ser un valor numérico.')
 ];
