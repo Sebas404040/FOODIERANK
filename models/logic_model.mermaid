@@ -1,0 +1,68 @@
+classDiagram
+    direction LR
+    class Usuario {
+        +INT id PK
+        +VARCHAR username
+        +VARCHAR password
+        +VARCHAR role
+        +VARCHAR correo
+        +VARCHAR telefono
+    }
+    class Categorias_Restaurantes {
+        +INT id PK
+        +VARCHAR nombre
+    }
+    class Categorias_Platos {
+        +INT id PK
+        +VARCHAR nombre
+    }
+    class Restaurantes {
+        +INT id PK
+        +INT categoriaId FK
+        +VARCHAR nombre
+        +VARCHAR direccion
+        +TEXT descripcion
+        +VARCHAR imagen_url
+        +BOOLEAN aprobado
+    }
+    class Platos {
+        +INT id PK
+        +INT id_restaurante FK
+        +INT categoriaId FK
+        +VARCHAR nombre
+        +TEXT descripcion
+        +DECIMAL precio
+        +VARCHAR imagen_url
+    }
+    class Resenas_Restaurantes {
+        +INT id PK
+        +INT restauranteId FK
+        +INT usuarioId FK
+        +INT calificacion
+        +TEXT comentario
+        +DATE fecha
+    }
+    class Resenas_Platos {
+        +INT id PK
+        +INT platoId FK
+        +INT usuarioId FK
+        +INT calificacion
+        +TEXT comentario
+        +DATE fecha
+    }
+    class Interaccion_Resena {
+        +INT usuario_id PK, FK
+        +INT resena_id PK, FK
+        +VARCHAR tipo
+        +DATE fecha
+    }
+    Categorias_Restaurantes "1" *-- "N" Restaurantes : 
+    Restaurantes "1" *-- "N" Platos : 
+    Categorias_Platos "N" -- "M" Platos : 
+    Usuario "1" -- "N" Resenas_Restaurantes : 
+    Restaurantes "1" -- "N" Resenas_Restaurantes : 
+    Usuario "1" -- "N" Resenas_Platos : 
+    Platos "1" -- "N" Resenas_Platos : 
+    Usuario "1" *-- "N" Interaccion_Resena : 
+    Resenas_Restaurantes "1" -- "N" Interaccion_Resena : 
+    Resenas_Platos "1" -- "N" Interaccion_Resena :

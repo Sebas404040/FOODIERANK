@@ -1,0 +1,179 @@
+graph TD
+%% ESTILOS (Legibilidad Corregida)
+style Usuario fill:#e0f2f7,stroke:#333,color:#000
+style Cliente fill:#e0f2f7,stroke:#333,color:#000
+style Administrador fill:#e0f2f7,stroke:#333,color:#000
+style Restaurantes fill:#fce4ec,stroke:#333,color:#000
+style Platos fill:#fff3e0,stroke:#333,color:#000
+style Categorias_Restaurantes fill:#e8eaf6,stroke:#333,color:#000
+style Categorias_Platos fill:#e0f2f7,stroke:#333,color:#000
+style Reseñas_Restaurantes fill:#e6ffed,stroke:#333,color:#000
+style Reseñas_Platos fill:#fffde7,stroke:#333,color:#000
+style Interaccion_Resena fill:#d4e1f5,stroke:#333,color:#000
+
+style Clasifica fill:#d1c4e9,stroke:#333,shape:rhombus,color:#000
+style Ofrece fill:#d1c4e9,stroke:#333,shape:rhombus,color:#000
+style Pertenece_A fill:#d1c4e9,stroke:#333,shape:rhombus,color:#000
+style Hace_Res_Rest fill:#d1c4e9,stroke:#333,shape:rhombus,color:#000
+style Hace_Res_Plato fill:#d1c4e9,stroke:#333,shape:rhombus,color:#000
+style Gestiona fill:#d1c4e9,stroke:#333,shape:rhombus,color:#000
+style Reacciona fill:#d1c4e9,stroke:#333,shape:rhombus,color:#000
+
+style Es_un fill:#cfd8dc,stroke:#333,shape:triangle,color:#000
+
+%% ATRIBUTOS (Óvalos/Círculos) - Adaptados a tus claves JSON
+style usuario_id fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style usuario_username fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style usuario_password fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style usuario_role fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style usuario_correo fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style usuario_telefono fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+
+style restaurante_id fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style restaurante_nombre fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style restaurante_categoriaId fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style restaurante_direccion fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style restaurante_imagen_url fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style restaurante_descripcion fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style restaurante_aprobado fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+
+style plato_id fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style plato_nombre fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style plato_categoriaId fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style plato_descripcion fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style plato_precio fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style plato_imagen_url fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style plato_id_restaurante fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+
+style cat_rest_id fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style cat_rest_nombre fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+
+style cat_plato_id fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style cat_plato_nombre fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+
+style res_rest_id fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style res_rest_restauranteId fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style res_rest_usuarioId fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style res_rest_calificacion fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style res_rest_comentario fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style res_rest_fecha fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+
+style res_plato_id fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style res_plato_platoId fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style res_plato_usuarioId fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style res_plato_calificacion fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style res_plato_comentario fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style res_plato_fecha fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+
+style inter_usuario_id fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style inter_resena_id fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style inter_tipo fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+style inter_fecha fill:#f0f4c3,stroke:#333,shape:circle,color:#000
+
+
+%% 1. DEFINICIÓN DE ENTIDADES
+Usuario[Usuario]
+Cliente[Cliente]
+Administrador[Administrador]
+Restaurantes[Restaurantes]
+Platos[Platos]
+Categorias_Restaurantes[Categorias_Restaurantes]
+Categorias_Platos[Categorias_Platos]
+Reseñas_Restaurantes[Reseñas_Restaurantes]
+Reseñas_Platos[Reseñas_Platos]
+Interaccion_Resena[Interaccion_Reseña]
+
+%% 2. HERENCIA
+Es_un{Es_un}
+Usuario --> Es_un
+Es_un --> Cliente
+Es_un --> Administrador
+
+%% 3. ASOCIACIÓN ENTIDADES <--> ATRIBUTOS
+Usuario --> usuario_id(id)
+Usuario --> usuario_username(username)
+Usuario --> usuario_password(password)
+Usuario --> usuario_role(role)
+Usuario --> usuario_correo(correo)
+Usuario --> usuario_telefono(telefono)
+
+Restaurantes --> restaurante_id(id)
+Restaurantes --> restaurante_nombre(nombre)
+Restaurantes --> restaurante_categoriaId(categoriaId)
+Restaurantes --> restaurante_direccion(direccion)
+Restaurantes --> restaurante_imagen_url(imagen_url)
+Restaurantes --> restaurante_descripcion(descripcion)
+Restaurantes --> restaurante_aprobado(aprobado)
+
+Platos --> plato_id(id)
+Platos --> plato_nombre(nombre)
+Platos --> plato_categoriaId(categoriaId)
+Platos --> plato_descripcion(descripcion)
+Platos --> plato_precio(precio)
+Platos --> plato_imagen_url(imagen_url)
+Platos --> plato_id_restaurante(id_restaurante)
+
+Categorias_Restaurantes --> cat_rest_id(id)
+Categorias_Restaurantes --> cat_rest_nombre(nombre)
+
+Categorias_Platos --> cat_plato_id(id)
+Categorias_Platos --> cat_plato_nombre(nombre)
+
+Reseñas_Restaurantes --> res_rest_id(id)
+Reseñas_Restaurantes --> res_rest_restauranteId(restauranteId)
+Reseñas_Restaurantes --> res_rest_usuarioId(usuarioId)
+Reseñas_Restaurantes --> res_rest_calificacion(calificacion)
+Reseñas_Restaurantes --> res_rest_comentario(comentario)
+Reseñas_Restaurantes --> res_rest_fecha(fecha) 
+
+Reseñas_Platos --> res_plato_id(id)
+Reseñas_Platos --> res_plato_platoId(platoId)
+Reseñas_Platos --> res_plato_usuarioId(usuarioId)
+Reseñas_Platos --> res_plato_calificacion(calificacion)
+Reseñas_Platos --> res_plato_comentario(comentario)
+Reseñas_Platos --> res_plato_fecha(fecha)
+
+Interaccion_Resena --> inter_usuario_id(usuario_id)
+Interaccion_Resena --> inter_resena_id(reseña_id)
+Interaccion_Resena --> inter_tipo(tipo)
+Interaccion_Resena --> inter_fecha(fecha)
+
+%% 4. RELACIONES Y CARDINALIDAD (Conservadas)
+
+%% Admin Gestiona (CRUD)
+Gestiona{Gestiona}
+Administrador -->|1| Gestiona
+Gestiona -->|N| Restaurantes
+Gestiona -->|N| Platos
+Gestiona -->|N| Categorias_Restaurantes
+
+%% Reseñas
+Hace_Res_Rest{Hace_Res}
+Usuario -->|1| Hace_Res_Rest
+Restaurantes -->|1| Hace_Res_Rest
+Hace_Res_Rest -->|N| Reseñas_Restaurantes
+
+Hace_Res_Plato{Hace_Res}
+Usuario -->|1| Hace_Res_Plato
+Platos -->|1| Hace_Res_Plato
+Hace_Res_Plato -->|N| Reseñas_Platos
+
+%% Interacción (Likes/Dislikes)
+Reacciona{Reacciona}
+Usuario -->|1| Reacciona
+Reacciona -->|N| Interaccion_Resena
+Reseñas_Restaurantes -->|1| Reacciona
+Reseñas_Platos -->|1| Reacciona
+
+%% Clasificación y Pertenencia
+Clasifica{Clasifica}
+Categorias_Restaurantes -->|1| Clasifica
+Clasifica -->|N| Restaurantes
+
+Ofrece{Ofrece}
+Restaurantes -->|1| Ofrece
+Ofrece -->|N| Platos
+
+Pertenece_A{Pertenece_A}
+Platos -->|N| Pertenece_A
+Pertenece_A -->|M| Categorias_Platos
