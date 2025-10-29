@@ -11,3 +11,5 @@ router.post("/", registerUsuarioDTO, validationDTO, postUsuario);
 router.delete("/:id", deleteUsuario);
 
 export default router;
+
+//checked
