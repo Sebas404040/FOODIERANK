@@ -67,7 +67,7 @@ export async function actualizarPlato(id_plato, datosActualizados) {
 
         const resultado = await obtenerBD().collection(COLECCION_PLATOS).updateOne(
             { id: id_plato },
-            { $set: { nombre, categoriaId, descripcion, imagen_url, precio, id_restaurante } }
+            { $set: { ...datosActualizados } }
         );
         if (resultado.matchedCount === 0) {
             throw new Error("Plato no encontrado");
