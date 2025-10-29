@@ -64,3 +64,27 @@ export async function obtenerResenasPlatoPorId(platoId) {
     }
 }
 
+export async function darLikeResenaPlato(id, id_usuario) {
+    try {
+        if (!id || !id_usuario) {
+            throw new Error("El ID de la reseña y el ID del usuario son obligatorios para dar like.");
+        } 
+        const resena = await obtenerBD().collection(COLECCION_RESENAS_PLATOS).findOne({ id: id });
+        if (!resena) {
+            throw new Error("Reseña no encontrada.");
+        }
+        
+        if (resena.usuarioId === id_usuario) {
+            throw new Error("No puedes dar like a tu propia reseña.");
+        }
+        
+        const updateResult = await obtenerBD().collection(COLECCION_RESENAS_PLATOS).updateOne(
+            { id: id },
+            { $inc: { likes: 1 } }
+        );
+        return updateResult;
+    } catch (error) {
+        throw new Error("Error al dar like a la reseña de plato: " + error.message);
+    }
+}
+

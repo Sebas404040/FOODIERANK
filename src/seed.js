@@ -57,19 +57,19 @@ async function seed() {
     ];
 
     const resenas_restaurantes = [
-        { id: 1, restauranteId: 1, usuarioId: 2, calificacion: 5, comentario: "Excelente comida y servicio." },
-        { id: 2, restauranteId: 2, usuarioId: 3, calificacion: 4, comentario: "Muy buen ambiente." },
-        { id: 3, restauranteId: 3, usuarioId: 4, calificacion: 3, comentario: "Comida aceptable." },
-        { id: 4, restauranteId: 1, usuarioId: 5, calificacion: 4, comentario: "Volvería a visitar." },
-        { id: 5, restauranteId: 2, usuarioId: 2, calificacion: 2, comentario: "No cumplió mis expectativas." }
+        { id: 1, restauranteId: 1, usuarioId: 2, calificacion: 5, comentario: "Excelente comida y servicio.", fecha: new Date("2023-01-01"), likes: 10 },
+        { id: 2, restauranteId: 2, usuarioId: 3, calificacion: 4, comentario: "Muy buen ambiente.", fecha: new Date("2023-01-02"), likes: 5 },
+        { id: 3, restauranteId: 3, usuarioId: 4, calificacion: 3, comentario: "Comida aceptable.", fecha: new Date("2023-01-03"), likes: 2 },
+        { id: 4, restauranteId: 1, usuarioId: 5, calificacion: 4, comentario: "Volvería a visitar.", fecha: new Date("2023-01-04"), likes: 8 },
+        { id: 5, restauranteId: 2, usuarioId: 2, calificacion: 2, comentario: "No cumplió mis expectativas.", fecha: new Date("2023-01-05"), likes: 1 }
     ];
 
     const resenas_platos = [
-        { id: 1, platoId: 1, usuarioId: 3, calificacion: 5, comentario: "Delicioso plato." },
-        { id: 2, platoId: 2, usuarioId: 4, calificacion: 4, comentario: "Muy sabroso." },
-        { id: 3, platoId: 3, usuarioId: 5, calificacion: 3, comentario: "Estuvo bien." },
-        { id: 4, platoId: 1, usuarioId: 2, calificacion: 4, comentario: "Lo recomiendo." },
-        { id: 5, platoId: 2, usuarioId: 3, calificacion: 2, comentario: "No me gustó mucho." }
+        { id: 1, platoId: 1, usuarioId: 3, calificacion: 5, comentario: "Delicioso plato.", fecha: new Date("2023-01-01"), likes: 10 },
+        { id: 2, platoId: 2, usuarioId: 4, calificacion: 4, comentario: "Muy sabroso.", fecha: new Date("2023-01-02"), likes: 5 },
+        { id: 3, platoId: 3, usuarioId: 5, calificacion: 3, comentario: "Estuvo bien.", fecha: new Date("2023-01-03"), likes: 2 },
+        { id: 4, platoId: 1, usuarioId: 2, calificacion: 4, comentario: "Lo recomiendo.", fecha: new Date("2023-01-04"), likes: 8 },
+        { id: 5, platoId: 2, usuarioId: 3, calificacion: 2, comentario: "No me gustó mucho.", fecha: new Date("2023-01-05"), likes: 1 }
     ];
 
     const platos = [

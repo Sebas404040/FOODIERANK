@@ -2,7 +2,8 @@ import {
     obtenerResenasPlatos,
     agregarResenaPlato,
     eliminarResenaPlato,
-    obtenerResenasPlatoPorId
+    obtenerResenasPlatoPorId,
+    darLikeResenaPlato
 } from "../services/resenas_platos.services.js";
 
 export async function getResenasPlatos(req, res) {
@@ -39,6 +40,17 @@ export async function getResenasPlatoPorId(req, res) {
         const platoId = parseInt(req.params.id);
         const resenas = await obtenerResenasPlatoPorId(platoId);
         res.status(200).json(resenas);
+    } catch (error) {
+        res.status(500).json({ mensaje: error.message });
+    }
+}
+
+export async function putLikeResenaPlato(req, res) {
+    try {
+        const id = parseInt(req.params.id);
+        const id_usuario = req.body.id_usuario;
+        const resultado = await darLikeResenaPlato(id, id_usuario);
+        res.status(200).json({ mensaje: "Like agregado a la reseña de plato exitosamente", resultado });
     } catch (error) {
         res.status(500).json({ mensaje: error.message });
     }
