@@ -1,7 +1,32 @@
 import { conectarBD, obtenerBD } from "./config/db.js";
+import { validationSchemas } from "./validationSchemas.js";
+
+async function aplicarValidaciones() {
+    const db = obtenerBD();
+    const coleccionesExistentes = await db.listCollections().toArray();
+    const nombresColecciones = coleccionesExistentes.map(c => c.name);
+
+    for (const [nombreColeccion, schema] of Object.entries(validationSchemas)) {
+        try {
+            if (nombresColecciones.includes(nombreColeccion)) {
+                await db.command({
+                    collMod: nombreColeccion,
+                    validator: schema
+                });
+                console.log(`Validador aplicado a la colección existente: ${nombreColeccion}`);
+            } else {
+                await db.createCollection(nombreColeccion, { validator: schema });
+                console.log(`Colección creada con validador: ${nombreColeccion}`);
+            }
+        } catch (error) {
+            console.error(`Error al aplicar validador en ${nombreColeccion}:`, error.message);
+        }
+    }
+}
 
 async function seed() {
     await conectarBD();
+    const db = obtenerBD();
 
     const categorias_restaurantes = [
         { id: 1, nombre: "Comida rapida" },
@@ -62,28 +87,32 @@ async function seed() {
         { id: 3, nombre: "Verde Vida", categoriaId: 3, direccion: "Boulevard 789, Ciudad", imagen_url: "https://example.com/vegetariana.jpg", descripcion: "Restaurante vegetariano con opciones saludables y deliciosas."}
     ];
 
-    await obtenerBD().collection("categorias_restaurantes").deleteMany();
-    await obtenerBD().collection("categorias_restaurantes").insertMany(categorias_restaurantes);
+    console.log("Aplicando validaciones de esquema a la base de datos...");
+    await aplicarValidaciones();
+    console.log("Validaciones aplicadas correctamente.");
 
-    await obtenerBD().collection("categorias_platos").deleteMany();
-    await obtenerBD().collection("categorias_platos").insertMany(categorias_platos);
+    console.log("Poblando la base de datos...");
 
-    await obtenerBD().collection("platos").deleteMany();
-    await obtenerBD().collection("platos").insertMany(platos);
+    await db.collection("categorias_restaurantes").deleteMany({});
+    await db.collection("categorias_restaurantes").insertMany(categorias_restaurantes);
 
-    await obtenerBD().collection("restaurantes").deleteMany();
-    await obtenerBD().collection("restaurantes").insertMany(restaurantes);
+    await db.collection("categorias_platos").deleteMany({});
+    await db.collection("categorias_platos").insertMany(categorias_platos);
 
-    await obtenerBD().collection("resenas_restaurantes").deleteMany();
-    await obtenerBD().collection("resenas_restaurantes").insertMany(resenas_restaurantes);
+    await db.collection("platos").deleteMany({});
+    await db.collection("platos").insertMany(platos);
 
-    await obtenerBD().collection("resenas_platos").deleteMany();
-    await obtenerBD().collection("resenas_platos").insertMany(resenas_platos);
+    await db.collection("restaurantes").deleteMany({});
+    await db.collection("restaurantes").insertMany(restaurantes);
 
-    await obtenerBD().collection("usuarios").deleteMany();
-    await obtenerBD().collection("usuarios").insertMany(usuarios);
+    await db.collection("resenas_restaurantes").deleteMany({});
+    await db.collection("resenas_restaurantes").insertMany(resenas_restaurantes);
 
+    await db.collection("resenas_platos").deleteMany({});
+    await db.collection("resenas_platos").insertMany(resenas_platos);
 
+    await db.collection("usuarios").deleteMany({});
+    await db.collection("usuarios").insertMany(usuarios);
 
     console.log("BD poblada con categorías, platos, restaurantes, reseñas y usuarios");
     process.exit();
