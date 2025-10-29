@@ -8,6 +8,8 @@ const router = Router();
 router.get("/", getCategoriasPlatos);
 router.post("/", createCategoriaPlatoDTO, validationDTO, postCategoriaPlato);
 router.delete("/:id", deleteCategoriaPlato);
-router.patch("/:id_plato", updateCategoriaPlatoDTO, validationDTO, patchCategoriaPlato);
+router.patch("/:id_categoriaActualizada", updateCategoriaPlatoDTO, validationDTO, patchCategoriaPlato);
 
 export default router;
+
+//problems with patch

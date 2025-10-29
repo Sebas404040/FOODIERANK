@@ -11,3 +11,5 @@ router.post("/", createReseñaPlatoDTO, validationDTO, postResenaPlato);
 router.delete("/:id", deleteResenaPlato);
 
 export default router;
+
+// checked

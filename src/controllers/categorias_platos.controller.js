@@ -36,9 +36,9 @@ export async function deleteCategoriaPlato(req, res) {
 
 export async function patchCategoriaPlato(req, res) {
     try {
-        const id_categoriaActualizada = parseInt(req.params.id);
+        const id_categoriaActualizada = req.params.id;
         const { id_plato } = req.body;
-        const resultado = await actualizarCategoriaPlato(id_categoriaActualizada, id_plato);
+        const resultado = await actualizarCategoriaPlato(id_plato, id_categoriaActualizada);
         res.status(200).json({ mensaje: "Categoría de plato actualizada exitosamente", resultado });
     } catch (error) {
         res.status(500).json({ mensaje: error.message });
