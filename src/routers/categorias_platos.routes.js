@@ -12,4 +12,4 @@ router.patch("/:id_categoriaActualizada", updateCategoriaPlatoDTO, validationDTO
 
 export default router;
 
-//problems with patch
+//checked
