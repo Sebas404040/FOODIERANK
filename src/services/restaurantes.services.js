@@ -66,7 +66,7 @@ export async function actualizarRestaurante(id_restaurante, datosActualizados) {
 
         const resultado = await obtenerBD().collection(COLECCION_RESTAURANTES).updateOne(
             { id: id_restaurante },
-            { $set: { nombre, categoriaId, direccion, imagen_url, descripcion } }
+            { $set: { ...datosActualizados } }
         );
         if (resultado.matchedCount === 0) {
             throw new Error("Restaurante no encontrado");

@@ -1,7 +1,6 @@
 import { body, param } from "express-validator";
 
 export const createRestauranteDTO = [
-    body('id').notEmpty().withMessage('El id es obligatorio.').isNumeric().withMessage('El id debe ser un valor numérico.'),
     body('nombre').notEmpty().withMessage('El nombre es obligatorio.').isString().withMessage('El nombre debe ser una cadena de texto.').isLength({ min: 3, max: 100 }).withMessage('El nombre debe tener entre 3 y 100 caracteres.').trim(),
     body('categoriaId').notEmpty().withMessage('El id de la categoría es obligatorio.').isNumeric().withMessage('El id de la categoría debe ser un valor numérico.'),
     body('direccion').notEmpty().withMessage('La dirección es obligatoria.').isString().withMessage('La dirección debe ser una cadena de texto.').isLength({ min: 10, max: 200 }).withMessage('La dirección debe tener entre 10 y 200 caracteres.').trim(),

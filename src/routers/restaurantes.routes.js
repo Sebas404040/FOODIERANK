@@ -11,3 +11,5 @@ router.delete("/:id", deleteRestaurante);
 router.patch("/:id", updateRestauranteDTO, validationDTO, patchRestaurante);
 
 export default router;
+
+//checked
