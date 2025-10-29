@@ -11,3 +11,5 @@ router.delete("/:id", deletePlato);
 router.patch("/:id", updatePlatoDTO, validationDTO, patchPlato);
 
 export default router;
+
+//checked
