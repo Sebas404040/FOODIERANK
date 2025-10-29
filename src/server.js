@@ -11,6 +11,7 @@ import categoriasRestaurantesRouter from './routers/categorias_restaurantes.rout
 import platosRouter from './routers/platos.routes.js';
 import restaurantesRouter from './routers/restaurantes.routes.js';
 import usuariosRouter from './routers/usuarios.routes.js';
+import semver from 'semver';
 
 const app = express();
 
@@ -42,6 +43,36 @@ app.use('/usuarios', usuariosRouter);
 
 app.get("/health", (req, res) => {
     res.status(200).json({ message: "Backend Activo" });
+});
+
+app.get("/version", (req, res) => {
+    const clientVersion = req.query.v;
+
+    if(!clientVersion){
+        return res.status(400).json({error: "Se debe proporcionar una version"});
+    }
+
+    const parsed = semver.coerce(clientVersion)?.version;
+
+    if(!parsed || !semver.valid(parsed)){
+        return res.status(400).json({error: "La versión no es válida", verRecibida: clientVersion, ejemploValido: "1.2.3"})
+    }
+
+    const es_compatible = semver.satisfies(parsed, process.env.MIN_RANGE);
+
+    if(es_compatible){
+        res.status(200).json({
+            message: `La versión ${parsed} es compatible`,
+            verRecibida: parsed,
+            requerido: process.env.MIN_RANGE,
+        })
+    }
+
+    return res.status(426).json({
+        error: `La version ${parsed} no es compatible con la aplicacion, necesita actualizacion`,
+        apiVersion: process.env.APIVERSION,
+        requerido: process.env.MIN_RANGE,
+    })
 });
 
 conectarBD().then(()=>{
