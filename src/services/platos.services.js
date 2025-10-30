@@ -77,3 +77,15 @@ export async function actualizarPlato(id_plato, datosActualizados) {
         throw new Error("Error al actualizar el plato: " + error.message);
     }
 }
+
+export async function obtenerPlatoPorId(id) {
+    try {
+        const plato = await obtenerBD().collection(COLECCION_PLATOS).findOne({ id: id });
+        if (!plato) {
+            throw new Error("Plato no encontrado");
+        }
+        return platos;
+    } catch (error) {
+        throw new Error("Error al obtener el plato: " + error.message);
+    }
+}

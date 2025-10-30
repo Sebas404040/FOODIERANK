@@ -2,7 +2,8 @@ import {
     obtenerPlatos,
     crearPlato,
     eliminarPlato,
-    actualizarPlato
+    actualizarPlato,
+    obtenerPlatoPorId
 } from "../services/platos.services.js";
 
 export async function getPlatos(req, res) {
@@ -45,3 +46,21 @@ export async function patchPlato(req, res) {
     }
 }
 
+export async function getPlatoPorId(req, res) {
+    try {
+        const id = parseInt(req.params.id);
+
+        const plato = await obtenerPlatoPorId(id);
+        
+        res.cookie('last_viewed_dish', id, {
+            httpOnly: false, 
+            signed: true, 
+            maxAge: 30 * 24 * 60 * 60 * 1000, 
+            secure: process.env.NODE_ENV === 'production' 
+        });
+
+        res.status(200).json(plato);
+    } catch (error) {
+        res.status(404).json({ mensaje: error.message });
+    }
+}
