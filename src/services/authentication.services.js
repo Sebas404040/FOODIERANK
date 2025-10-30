@@ -8,8 +8,7 @@ function generarToken(id){
 
 const usuarios = ()=> obtenerBD().collection("usuarios");
 
-export async function registrarUsuario({username, password, role, email, telefono}) {
-    const correo = email; // Asignamos el valor de email a correo
+export async function registrarUsuario({username, password, role, correo, telefono}) {
     const usuarioExistente = await usuarios().findOne({correo});
     if(usuarioExistente) throw new Error("El correo ya está registrado!!");
 
