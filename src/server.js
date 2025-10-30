@@ -11,6 +11,7 @@ import categoriasRestaurantesRouter from './routers/categorias_restaurantes.rout
 import platosRouter from './routers/platos.routes.js';
 import restaurantesRouter from './routers/restaurantes.routes.js';
 import usuariosRouter from './routers/usuarios.routes.js';
+import authenticationRouter from './routers/authentication.routes.js';
 import semver from 'semver';
 
 const app = express();
@@ -40,6 +41,8 @@ app.use('/categorias_restaurantes', categoriasRestaurantesRouter);
 app.use('/platos', platosRouter);
 app.use('/restaurantes', restaurantesRouter);
 app.use('/usuarios', usuariosRouter);
+app.use('/auth', authenticationRouter);
+
 
 app.get("/health", (req, res) => {
     res.status(200).json({ message: "Backend Activo" });

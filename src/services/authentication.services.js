@@ -1,23 +1,25 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-import { getDB } from "../config/db.js";
-
-dotenv.config();
+import { obtenerBD } from "../config/db.js";
 
 function generarToken(id){
     return jwt.sign({id}, process.env.JWT_SECRET_KEY, {expiresIn: process.env.JWT_EXPIRES_TOKEN});
 }
 
-const usuarios = ()=> getDB().collection("usuarios");
+const usuarios = ()=> obtenerBD().collection("usuarios");
 
-export async function registrarUsuario({username, password, role, correo, telefono}) {
-    const usuarioExistente = await usuarios().findOne({email});
-    if(usuarioExistente) throw new Error("Usuario ya existe!!");
+export async function registrarUsuario({username, password, role, email, telefono}) {
+    const correo = email; // Asignamos el valor de email a correo
+    const usuarioExistente = await usuarios().findOne({correo});
+    if(usuarioExistente) throw new Error("El correo ya está registrado!!");
 
     const contraCifrada = await bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS));
 
+    const ultimoUsuario = await usuarios().findOne({}, { sort: { id: -1 } });
+    const nuevoId = ultimoUsuario ? ultimoUsuario.id + 1 : 1;
+
     const usuario = {
+        id: nuevoId,
         username,
         password: contraCifrada,
         role,
@@ -29,11 +31,11 @@ export async function registrarUsuario({username, password, role, correo, telefo
 
     const token = generarToken(resultado.insertedId);
 
-    return {id: resultado.insertedId, username, email, token};
+    return {id: resultado.insertedId, username, correo, token};
 }
 
-export async function iniciarSesion({email, password}) {
-    const usuarioExistente = await usuarios().findOne({email});
+export async function iniciarSesion({correo, password}) {
+    const usuarioExistente = await usuarios().findOne({correo});
     if (!usuarioExistente) throw new Error("El usuario no existe!!"); 
 
     const validacion = await bcrypt.compare(password, usuarioExistente.password);
@@ -42,7 +44,7 @@ export async function iniciarSesion({email, password}) {
     const token = generarToken(usuarioExistente._id);
     return {id: usuarioExistente._id, 
         username: usuarioExistente.username, 
-        email: usuarioExistente.email, 
+        correo: usuarioExistente.correo, 
         token
     };
 }
