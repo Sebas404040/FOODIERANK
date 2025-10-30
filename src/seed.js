@@ -49,11 +49,12 @@ async function seed() {
     ];
 
     const usuarios = [
-        { id: 1, username: "admin", password: "123456", role: "admin", correo: "admin@example.com", telefono: "1234567890"  },
-        { id: 2, username: "Davisson", password: "pass123", role: "user", correo: "davisson@example.com", telefono: "0987654321" },
-        { id: 3, username: "Dylan", password: "pass456", role: "user", correo: "dylan@example.com", telefono: "1122334455" },
-        { id: 4, username: "Camilo", password: "pass789", role: "user", correo: "camilo@example.com", telefono: "2233445566" },
-        { id: 5, username: "Santiago", password: "pass101", role: "user", correo: "santiago@example.com", telefono: "3344556677" }
+        // NOTA: Las contraseñas deben ser hasheadas antes de insertarse. Ejemplo: '$2b$10$...'
+        { id: 1, username: "admin", password: "$2b$10$abcdefghijklmnopqrstuv.1234567890abcdefghijklmnopqr", role: "admin", correo: "admin@example.com", telefono: "1234567890"  },
+        { id: 2, username: "Davisson", password: "$2b$10$bcdefghijklmnopqrstuvw.234567890abcdefghijklmnopqrs", role: "user", correo: "davisson@example.com", telefono: "0987654321" },
+        { id: 3, username: "Dylan", password: "$2b$10$cdefghijklmnopqrstuvwx.34567890abcdefghijklmnopqrst", role: "user", correo: "dylan@example.com", telefono: "1122334455" },
+        { id: 4, username: "Camilo", password: "$2b$10$defghijklmnopqrstuvwxy.4567890abcdefghijklmnopqrstu", role: "user", correo: "camilo@example.com", telefono: "2233445566" },
+        { id: 5, username: "Santiago", password: "$2b$10$efghijklmnopqrstuvwxyz.567890abcdefghijklmnopqrstuv", role: "user", correo: "santiago@example.com", telefono: "3344556677" }
     ];
 
     const resenas_restaurantes = [
