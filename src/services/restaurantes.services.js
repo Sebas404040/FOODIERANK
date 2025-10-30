@@ -76,3 +76,15 @@ export async function actualizarRestaurante(id_restaurante, datosActualizados) {
         throw new Error("Error al actualizar el restaurante: " + error.message);
     }
 }
+
+export async function obtenerRestaurantePorId(id) {
+    try {
+        const restaurante = await obtenerBD().collection(COLECCION_RESTAURANTES).findOne({ id: id });
+        if (!restaurante) {
+            throw new Error("Restaurante no encontrado");
+        }
+        return restaurante;
+    } catch (error) {
+        throw new Error("Error al obtener el restaurante: " + error.message);
+    }
+}
