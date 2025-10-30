@@ -13,6 +13,8 @@ import restaurantesRouter from './routers/restaurantes.routes.js';
 import usuariosRouter from './routers/usuarios.routes.js';
 import authenticationRouter from './routers/authentication.routes.js';
 import semver from 'semver';
+import swaggerUi from 'swagger-ui-express'; 
+import swaggerSpec from './swagger.spec.js';
 
 const app = express();
 
@@ -42,7 +44,7 @@ app.use('/platos', platosRouter);
 app.use('/restaurantes', restaurantesRouter);
 app.use('/usuarios', usuariosRouter);
 app.use('/auth', authenticationRouter);
-
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get("/health", (req, res) => {
     res.status(200).json({ message: "Backend Activo" });
