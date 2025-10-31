@@ -90,3 +90,34 @@ export async function darLikeResenaPlato(id, id_usuario) {
     }
 }
 
+export async function actualizarResenaPlato(id, datos_resena) {
+    try {
+        const { calificacion, comentario } = datos_resena;
+
+        if (!id) {
+            throw new Error("El ID de la reseña es obligatorio para actualizar.");
+        }
+
+        const resenaExistente = await obtenerBD().collection(COLECCION_RESENAS_PLATOS).findOne({ id: id });
+
+        if (!resenaExistente) {
+            throw new Error("Reseña de plato no encontrada.");
+        }
+
+        const camposActualizar = {};
+        if (calificacion !== undefined) camposActualizar.calificacion = calificacion;
+        if (comentario !== undefined) camposActualizar.comentario = comentario;
+
+        if (Object.keys(camposActualizar).length === 0) {
+            throw new Error("No hay campos para actualizar.");
+        }
+
+        return await obtenerBD().collection(COLECCION_RESENAS_PLATOS).updateOne(
+            { id: id },
+            { $set: camposActualizar }
+        );
+
+    } catch (error) {
+        throw new Error("Error al actualizar la reseña de plato: " + error.message);
+    }
+}
