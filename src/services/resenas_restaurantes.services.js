@@ -13,9 +13,9 @@ export async function obtenerResenasRestaurantes() {
 
 export async function agregarResenaRestaurante(datos_resena) {
     try {
-        const { restauranteId, usuarioId, calificacion, comentario } = datos_resena;
+        const { restauranteId, usuarioId, calificacion, comentario, fecha, likes } = datos_resena;
 
-        if (!restauranteId || !usuarioId || !calificacion || !comentario) {
+        if (!restauranteId || !usuarioId || !calificacion || !comentario || fecha === undefined || likes === undefined) {
             throw new Error("Faltan datos obligatorios para agregar la reseña de restaurante.");
         }
 
@@ -24,15 +24,18 @@ export async function agregarResenaRestaurante(datos_resena) {
 
         const nuevaResena = {
             id: nuevoId,
-            restauranteId: datos_resena.restauranteId, 
-            usuarioId: datos_resena.usuarioId,
-            calificacion: datos_resena.calificacion,
-            comentario: datos_resena.comentario
+            restauranteId: restauranteId, 
+            usuarioId: usuarioId,
+            calificacion: calificacion,
+            comentario: comentario,
+            fecha: new Date(fecha),
+            likes: likes
         };
 
         return await obtenerBD().collection(COLECCION_RESENAS_RESTAURANTES).insertOne(nuevaResena);
 
     } catch (error) {
+        console.error("Error detallado en agregarResenaRestaurante:", error);
         throw new Error("Error al agregar la reseña de restaurante: " + error.message);
     }
 }
@@ -88,3 +91,20 @@ export async function darLikeResenaRestaurante(id, id_usuario) {
     }
 }
 
+export async function actualizarResenaRestaurante(id, datosActualizados) {
+    try {
+        const { calificacion, comentario } = datosActualizados;
+        if (!calificacion && !comentario) {
+            throw new Error("No se proporcionaron datos para actualizar.");
+        }
+
+        const resultado = await obtenerBD().collection(COLECCION_RESENAS_RESTAURANTES).updateOne(
+            { id: id },
+            { $set: datosActualizados }
+        );
+
+        if (resultado.matchedCount === 0) throw new Error("Reseña no encontrada.");
+    } catch (error) {
+        throw new Error("Error al actualizar la reseña de restaurante: " + error.message);
+    }
+}

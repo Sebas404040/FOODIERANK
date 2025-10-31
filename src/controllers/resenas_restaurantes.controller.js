@@ -3,13 +3,25 @@ import {
     agregarResenaRestaurante,
     eliminarResenaRestaurante,
     obtenerResenasRestaurantePorId,
-    darLikeResenaRestaurante
+    darLikeResenaRestaurante,
+    actualizarResenaRestaurante
 } from "../services/resenas_restaurantes.services.js";
 
 export async function getResenasRestaurantes(req, res) {
     try {
         const resenas = await obtenerResenasRestaurantes();
         res.status(200).json(resenas);
+    } catch (error) {
+        res.status(500).json({ mensaje: error.message });
+    }
+}
+
+export async function patchResenaRestaurante(req, res) {
+    try {
+        const id = parseInt(req.params.id);
+        const datosActualizados = req.body;
+        await actualizarResenaRestaurante(id, datosActualizados);
+        res.status(200).json({ mensaje: "Reseña de restaurante actualizada exitosamente" });
     } catch (error) {
         res.status(500).json({ mensaje: error.message });
     }
