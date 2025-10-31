@@ -122,6 +122,18 @@ const swaggerSpec = {
           id: 2,
           nombre: 'Gourmet'
         }
+      },
+      CategoriaPlato: {
+        type: 'object',
+        required: ['nombre'],
+        properties: {
+          id: { type: 'integer', description: 'ID de la categoría generado automáticamente.' },
+          nombre: { type: 'string', description: 'Nombre de la categoría (ej: "Entradas", "Postres").' }
+        },
+        example: {
+          id: 1,
+          nombre: 'Entradas'
+        }
       }
     }
   },
@@ -574,6 +586,97 @@ const swaggerSpec = {
           '400': { description: 'Datos inválidos.' },
           '401': { description: 'No autorizado.' },
           '404': { description: 'Restaurante o categoría no encontrados.' }
+        }
+      }
+    },
+    '/categorias_platos': {
+      get: {
+        summary: 'Obtiene todas las categorías de platos.',
+        tags: ['Categorías de Platos'],
+        responses: {
+          '200': {
+            description: 'Lista de categorías de platos.',
+            content: {
+              'application/json': {
+                schema: { type: 'array', items: { $ref: '#/components/schemas/CategoriaPlato' } }
+              }
+            }
+          },
+          '500': { description: 'Error interno del servidor.' }
+        }
+      },
+      post: {
+        summary: 'Crea una nueva categoría de plato (Requiere autenticación).',
+        tags: ['Categorías de Platos'],
+        security: [{ bearerAuth: [] }],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  nombre: { type: 'string', description: 'Nombre de la nueva categoría.' }
+                },
+                required: ['nombre']
+              }
+            }
+          }
+        },
+        responses: {
+          '201': { description: 'Categoría creada exitosamente.' },
+          '400': { description: 'Categoría ya existe o datos inválidos.' },
+          '401': { description: 'No autorizado.' }
+        }
+      }
+    },
+    '/categorias_platos/{id}': {
+      delete: {
+        summary: 'Elimina una categoría de plato por ID (Requiere autenticación).',
+        tags: ['Categorías de Platos'],
+        security: [{ bearerAuth: [] }],
+        parameters: [{
+          in: 'path', name: 'id', schema: { type: 'integer' }, required: true, description: 'ID numérico de la categoría a eliminar.'
+        }],
+        responses: {
+          '200': { description: 'Categoría eliminada exitosamente.' },
+          '401': { description: 'No autorizado.' },
+          '404': { description: 'Categoría no encontrada.' }
+        }
+      }
+    },
+    '/categorias_platos/{id_categoriaActualizada}': {
+      patch: {
+        summary: 'Actualiza la categoría de un plato existente.',
+        description: 'Asigna una nueva categoría a un plato específico.',
+        tags: ['Categorías de Platos'],
+        security: [{ bearerAuth: [] }],
+        parameters: [{
+          in: 'path',
+          name: 'id_categoriaActualizada',
+          schema: { type: 'integer' },
+          required: true,
+          description: 'ID numérico de la nueva categoría a asignar.'
+        }],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  id_plato: { type: 'integer', description: 'ID del plato cuya categoría se va a actualizar.' }
+                },
+                required: ['id_plato']
+              }
+            }
+          }
+        },
+        responses: {
+          '200': { description: 'Categoría de plato actualizada exitosamente.' },
+          '400': { description: 'Datos inválidos.' },
+          '401': { description: 'No autorizado.' },
+          '404': { description: 'Plato o categoría no encontrados.' }
         }
       }
     }
