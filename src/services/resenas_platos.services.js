@@ -11,11 +11,11 @@ export async function obtenerResenasPlatos() {
     }
 }
 
-export async function agregarResenaPlato(datos_resena) {
+export async function agregarResenaPlato(datos_resena) { 
     try {
-        const { platoId, usuarioId, calificacion, comentario } = datos_resena;
+        const { platoId, usuarioId, calificacion, comentario, fecha, likes } = datos_resena;
 
-        if (!platoId || !usuarioId || !calificacion || !comentario) {
+        if (!platoId || !usuarioId || !calificacion || !comentario || fecha === undefined || likes === undefined) {
             throw new Error("Faltan datos obligatorios para agregar la reseña de plato.");
         }
 
@@ -24,12 +24,14 @@ export async function agregarResenaPlato(datos_resena) {
 
         const nuevaResena = {
             id: nuevoId,
-            platoId: datos_resena.platoId,
-            usuarioId: datos_resena.usuarioId,
-            calificacion: datos_resena.calificacion,
-            comentario: datos_resena.comentario
+            platoId: platoId, 
+            usuarioId: usuarioId,
+            calificacion: calificacion,
+            comentario: comentario,
+            fecha: new Date(fecha),
+            likes: likes,
         };
-
+        
         return await obtenerBD().collection(COLECCION_RESENAS_PLATOS).insertOne(nuevaResena);
 
     } catch (error) {
