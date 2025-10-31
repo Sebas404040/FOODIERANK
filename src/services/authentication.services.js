@@ -41,7 +41,8 @@ export async function iniciarSesion({correo, password}) {
     if(!validacion) throw new Error("Contraseña es incorrecta");
 
     const token = generarToken(usuarioExistente._id);
-    return {id: usuarioExistente._id, 
+    return {id: usuarioExistente._id,
+        numericId: usuarioExistente.id, 
         username: usuarioExistente.username, 
         correo: usuarioExistente.correo, 
         role: usuarioExistente.role,
