@@ -134,6 +134,53 @@ const swaggerSpec = {
           id: 1,
           nombre: 'Entradas'
         }
+      },
+      UsuarioRegistro: {
+        type: 'object',
+        required: ['username', 'password', 'role', 'email', 'telefono'],
+        properties: {
+          username: { type: 'string', description: 'Nombre de usuario.' },
+          password: { type: 'string', format: 'password', description: 'Contraseña cifrada (mínimo 6 caracteres).' },
+          role: { type: 'string', enum: ['admin', 'user'], description: 'Rol del usuario.' },
+          email: { type: 'string', format: 'email', description: 'Correo electrónico único.' },
+          telefono: { type: 'string', description: 'Número de teléfono.' }
+        },
+        example: {
+          username: 'test_user',
+          password: 'password123',
+          role: 'user',
+          email: 'test@example.com',
+          telefono: '1234567890'
+        }
+      },
+      // Esquema para el inicio de sesión (Payload)
+      UsuarioLogin: {
+        type: 'object',
+        required: ['email', 'contrasenia'],
+        properties: {
+          email: { type: 'string', format: 'email', description: 'Correo electrónico del usuario.' },
+          contrasenia: { type: 'string', format: 'password', description: 'La propiedad del body es "contrasenia".' }
+        },
+        example: {
+          email: 'test@example.com',
+          contrasenia: 'password123'
+        }
+      },
+      // Esquema de respuesta de autenticación exitosa
+      AuthResponse: {
+        type: 'object',
+        properties: {
+          id: { type: 'string', description: 'ID de MongoDB del usuario.' },
+          username: { type: 'string' },
+          correo: { type: 'string', format: 'email' },
+          mensaje: { type: 'string' }
+        },
+        example: {
+          id: '60c72b2f90d1f7001c8f4b0e',
+          username: 'test_user',
+          correo: 'test@example.com',
+          mensaje: 'Inicio de sesión exitoso'
+        }
       }
     }
   },
@@ -677,6 +724,67 @@ const swaggerSpec = {
           '400': { description: 'Datos inválidos.' },
           '401': { description: 'No autorizado.' },
           '404': { description: 'Plato o categoría no encontrados.' }
+        }
+      }
+    },
+    '/auth': {
+      get: {
+        summary: 'Verifica la salud del servicio de autenticación (Health Check).',
+        tags: ['Autenticación'],
+        responses: {
+          '200': {
+            description: 'Servicio de Autenticación Activo.',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    status: { type: 'string' },
+                    message: { type: 'string' }
+                  }
+                },
+                example: { status: 'OK', message: 'Authentication service is healthy' }
+              }
+            }
+          }
+        }
+      }
+    },
+    '/auth/register': {
+      post: {
+        summary: 'Registra un nuevo usuario.',
+        tags: ['Autenticación'],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': { schema: { $ref: '#/components/schemas/UsuarioRegistro' } }
+          }
+        },
+        responses: {
+          '201': {
+            description: 'Registro exitoso. El token JWT se establece como una cookie HttpOnly.',
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/AuthResponse' } } }
+          },
+          '400': { description: 'Datos inválidos o el correo ya está registrado.' }
+        }
+      }
+    },
+    '/auth/login': {
+      post: {
+        summary: 'Inicia sesión del usuario.',
+        tags: ['Autenticación'],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': { schema: { $ref: '#/components/schemas/UsuarioLogin' } }
+          }
+        },
+        responses: {
+          '200': {
+            description: 'Inicio de sesión exitoso. El token JWT se establece como una cookie HttpOnly.',
+            content: { 'application/json': { schema: { $ref: '#/components/schemas/AuthResponse' } } }
+          },
+          '401': { description: 'Contraseña incorrecta o el usuario no existe.' }
         }
       }
     }
