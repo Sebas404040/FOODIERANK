@@ -44,6 +44,7 @@ export async function iniciarSesion({correo, password}) {
     return {id: usuarioExistente._id, 
         username: usuarioExistente.username, 
         correo: usuarioExistente.correo, 
+        role: usuarioExistente.role,
         token
     };
 }
