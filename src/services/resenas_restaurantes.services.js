@@ -70,24 +70,47 @@ export async function obtenerResenasRestaurantePorId(restauranteId) {
 export async function darLikeResenaRestaurante(id, id_usuario) {
     try {
         if (!id || !id_usuario) {
-            throw new Error("El ID de la reseña y el ID del usuario son obligatorios para dar like.");
-        } 
-        const resena = await obtenerBD().collection(COLECCION_RESENAS_RESTAURANTES).findOne({ id: id });
+            throw new Error("El ID de la reseña y el ID del usuario son obligatorios.");
+        }
+
+        const resena = await obtenerBD().collection(COLECCION_RESENAS_RESTAURANTES).findOne({ id: parseInt(id) });
         if (!resena) {
             throw new Error("Reseña no encontrada.");
         }
-        
+
         if (resena.usuarioId === id_usuario) {
             throw new Error("No puedes dar like a tu propia reseña.");
         }
 
+        const verificacionLike = resena.likedBy && resena.likedBy.includes(id_usuario);
+
+        let updateOperation;
+        if (verificacionLike) {
+            updateOperation = {
+                $inc: { likes: -1 },
+                $pull: { likedBy: id_usuario }
+            };
+        } else {
+            updateOperation = {
+                $inc: { likes: 1 },
+                $addToSet: { likedBy: id_usuario } 
+            };
+        }
+
         const updateResult = await obtenerBD().collection(COLECCION_RESENAS_RESTAURANTES).updateOne(
-            { id: id },
-            { $inc: { likes: 1 } }
+            { id: parseInt(id) },
+            updateOperation
         );
-        return updateResult;
+
+        const resenaActualizada = await obtenerBD().collection(COLECCION_RESENAS_RESTAURANTES).findOne({ id: parseInt(id) });
+        
+        return {
+            likes: resenaActualizada.likes,
+            likedByUser: !verificacionLike 
+        };
+
     } catch (error) {
-        throw new Error("Error al dar like a la reseña de restaurante: " + error.message);
+        throw new Error("Error al procesar el like de la reseña: " + error.message);
     }
 }
 
