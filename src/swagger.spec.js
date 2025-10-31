@@ -417,6 +417,27 @@ const swaggerSpec = {
           '200': { description: 'Reseña eliminada exitosamente.' },
           '404': { description: 'Reseña no encontrada.' }
         }
+      },
+      patch: {
+        summary: 'Actualiza parcialmente una reseña de restaurante.',
+        tags: ['Reseñas de Restaurantes'],
+        parameters: [{
+          in: 'path', name: 'id', schema: { type: 'integer' }, required: true, description: 'ID numérico de la reseña a actualizar.'
+        }],
+        requestBody: {
+          required: true,
+          content: {
+            'application/json': {
+              schema: {
+                $ref: '#/components/schemas/ResenaRestaurante'
+              }
+            }
+          }
+        },
+        responses: {
+          '200': { description: 'Reseña de restaurante actualizada exitosamente.' },
+          '404': { description: 'Reseña no encontrada.' }
+        }
       }
     },
     '/resenas_restaurantes/like/{id}': {
