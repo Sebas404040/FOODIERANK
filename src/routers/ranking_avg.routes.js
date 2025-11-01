@@ -4,7 +4,7 @@ import { getRankingRestaurantes_controller, getRankingPlatos_controller } from "
 
 const routerRanking = Router();
 
-routerRanking.get("/restaurantes", getRankingRestaurantes_controller);
-routerRanking.get("/platos", getRankingPlatos_controller);
+routerRanking.get("/restaurantes/:id", getRankingRestaurantes_controller);
+routerRanking.get("/platos/:id", getRankingPlatos_controller);
 
 export default routerRanking;

@@ -5,89 +5,51 @@ const COLECCION_RESENAS_PLATOS = "resenas_platos";
 const COLECCION_RESTAURANTES = "restaurantes";
 const COLECCION_PLATOS = "platos";
 
-export async function rankingRestaurantes() {
+export async function rankingRestaurantes(id) {
     try {
         const db = obtenerBD();
-        const rankingRestaurantes = await db.collection(COLECCION_RESENAS_RESTAURANTES).aggregate([
+        const resultado = await db.collection(COLECCION_RESENAS_RESTAURANTES).aggregate([
+            { $match: { restauranteId: id } },
             {
                 $group: {
                     _id: "$restauranteId",
                     promedioEstrellas: { $avg: "$calificacion" }
                 }
             },
-            { $sort: { promedioEstrellas: -1 } },
-            {
-                $lookup: {
-                    from: COLECCION_RESTAURANTES,
-                    localField: "_id",
-                    foreignField: "id",
-                    as: "infoRestaurante"
-                }
-            },
-            {
-                $unwind: "$infoRestaurante"
-            },
             {
                 $project: {
                     _id: 0,
-                    restauranteId: "$_id",
-                    nombre: "$infoRestaurante.nombre",
-                    descripcion: "$infoRestaurante.descripcion",
                     promedioEstrellas: { $round: ["$promedioEstrellas", 2] }
                 }
             }
         ]).toArray();
-        return rankingRestaurantes;
+
+        return resultado[0]?.promedioEstrellas || 0;
     } catch (error) {
         throw new Error("Error al obtener el ranking de restaurantes: " + error.message);
     }
 }
 
-export async function rankingPlatos() {
+export async function rankingPlatos(id) {
     try {
         const db = obtenerBD();
-        const rankingPlatos = await db.collection(COLECCION_RESENAS_PLATOS).aggregate([
-            {
-                $group: {
-                    _id: "$platoId",
-                    promedioEstrellas: { $avg: "$calificacion" }
-                }
-            },
-            { $sort: { promedioEstrellas: -1 } },
-            {
-                $lookup: {
-                    from: COLECCION_PLATOS,
-                    localField: "_id",
-                    foreignField: "id",
-                    as: "infoPlato"
-                }
-            },
-            {
-                $unwind: "$infoPlato"
-            },
-            {
-                $lookup: {
-                    from: COLECCION_RESTAURANTES,
-                    localField: "infoPlato.id_restaurante",
-                    foreignField: "id",
-                    as: "infoRestaurante"
-                }
-            },
-            {
-                $unwind: "$infoRestaurante"
-            },
-            {
-                $project: {
-                    _id: 0,
-                    platoId: "$_id",
-                    nombrePlato: "$infoPlato.nombre",
-                    descripcionPlato: "$infoPlato.descripcion",
-                    nombreRestaurante: "$infoRestaurante.nombre",
-                    promedioEstrellas: { $round: ["$promedioEstrellas", 2] }
-                }
+        const resultado = await db.collection(COLECCION_RESENAS_PLATOS).aggregate([
+        { $match: { platoId: id } },
+        {
+            $group: {
+                _id: "$platoId",
+                promedioEstrellas: { $avg: "$calificacion" }
             }
-        ]).toArray();
-        return rankingPlatos;
+        },
+        {
+            $project: {
+                _id: 0,
+                promedioEstrellas: { $round: ["$promedioEstrellas", 2] }
+            }
+        }
+    ]).toArray();
+
+    return resultado[0]?.promedioEstrellas || 0; 
     } catch (error) {
         throw new Error("Error al obtener el ranking de platos: " + error.message);
     }
