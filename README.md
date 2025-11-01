@@ -2,8 +2,8 @@
 
 ## Modelo E-R
 
-![Modelo Entidad-Relación](./models/E-R_model.svg)
+![Modelo Entidad-Relación](./models/Modelo_conceptual.svg)
 
 ## Modelo logico
 
-![Modelo lógico](./models/logic_model.svg)
+![Modelo lógico](./models/Modelo%20logico.svg)
