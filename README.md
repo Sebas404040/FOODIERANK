@@ -522,3 +522,13 @@ Estructura de datos y métricas de desempeño.
   * `GET /ranking/platos/:id`
   * **Propósito:** Devuelve el promedio de calificación para el plato.
   * **Resultado (200 OK):** `3.8`
+
+## Conclusión ✅
+
+La culminación del desarrollo del backend de FoodieRank establece una base robusta, segura y escalable para la aplicación. Mediante la adopción de tecnologías modernas y una arquitectura modular, se ha logrado construir la base de dato, arquitecturas de API y lógica que soporta todas las funcionalidades de la plataforma.
+
+## Autores 🥷 🥷
+
+- Davisson Adriel Román (Product Owner, Developer)
+
+- Joan Sebastián Gómez Serrano (SCRUM Masterm, developer)
