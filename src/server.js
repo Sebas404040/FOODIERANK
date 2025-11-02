@@ -19,18 +19,27 @@ import routerRanking from './routers/ranking_avg.routes.js';
 
 const app = express();
 
-app.use(cors({
-    origin: [
+const allowedOrigins = [
+    'http://127.0.0.1:5502',
     'http://127.0.0.1:5501',
     'http://localhost:5501',
-    'file://',
     'http://127.0.0.1:5500',
     'http://localhost:5500'
-],
-    methods: ["GET", "POST", "PATCH", "DELETE"],
-    allowedHeaders: ["Content-Type"],
-    credentials: false
-}));
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error(`El origen ${origin} no está permitido por CORS.`));
+    }
+  },
+  credentials: true, 
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
