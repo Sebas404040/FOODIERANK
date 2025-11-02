@@ -1,6 +1,6 @@
 # ⭐ FOODIERANK 🍝
 
-![FB_LOGO](./images/FB_LOGO.png)
+![logo_inicio](./images/logo_inicio.png)
 
 FoodieRank es una aplicación web diseñada para ser el punto de encuentro definitivo entre los amantes de la gastronomía y los mejores establecimientos de comida. Su propósito fundamental es ofrecer transparencia y una clasificación impulsada por la comunidad para ayudar a los usuarios a tomar decisiones informadas sobre dónde comer.
 
