@@ -10,6 +10,7 @@ export async function registrarUsuario_controller(req, res, next) {
             sameSite: 'Lax', 
             maxAge: 1000 * 60 * 60 * 24 * 30, 
             path: '/',
+            signed: true,
             domain: (process.env.NODE_ENV !== 'production' && req.hostname === '127.0.0.1') ? '127.0.0.1' : undefined // Asegura el dominio correcto en desarrollo
         });
 
@@ -32,6 +33,7 @@ export async function iniciarSesion_controller(req, res, next) {
             sameSite: 'Lax', 
             maxAge: 1000 * 60 * 60 * 24 * 30,
             path: '/',
+            signed: true,
             domain: (process.env.NODE_ENV !== 'production' && req.hostname === '127.0.0.1') ? '127.0.0.1' : undefined 
         });
 
