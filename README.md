@@ -62,6 +62,42 @@ FOODIERANK/
 
 ```
 
+
+## Instrucciones de instalación 🆙
+
+En esta  seeción se encuentran las instrucciones de instalación para el backend de FOODIERANK.
+
+1. Entrar al link de este repositorio oficial para descargar el backend:
+
+https://github.com/Sebas404040/FOODIERANK
+
+2. Descargar la carpeta con el BACKEND:
+
+![instruction_1](./images/instruction_1.png)
+
+
+3. Al haber descargado el archivo .zip se debe descomprimir 
+
+![instruction_2](./images/instruction_2.png)
+
+4. Descomprimir el archivo
+
+![instruction_3](./images/instruction_3.png)
+
+5. Al haber descomprimido el archivo se abre una terminal con la ruta de la carpeta del backend
+
+![instruction_4](./images/instruction_4.png)
+
+![instruction_5](./images/instruction_5.png)
+
+6. Se ejecuta el comando `npm install` para instalar las dependencias necesarias.
+
+![instruction_6](./images/instruction_6.png)
+
+7. Se ejecuta el comando `npm run dev` para iniciar el servidor.
+
+![instruction_7](./images/instruction_7.png)
+
 ## Planeación ☁️
 
 En esta sección se encuentran los modelos de bases de datos para la creación correcta de la base de datos y la estructuraci;ón de las entidades. Secci;ón muy importante ya que senta las bases del aplicativo web. 
@@ -398,6 +434,7 @@ db.createCollection('categorias_platos', {
 ```
 
 Esta colección almacena las diferentes categorías a las que pueden pertenecer los platos (por ejemplo: entradas, platos principales, postres, bebidas, etc.). Cada documento representa una categoría única con su identificador y nombre.
+
 
 ## Endpoints importantes 🔗
 
