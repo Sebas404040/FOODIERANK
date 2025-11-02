@@ -6,6 +6,62 @@ FoodieRank es una aplicación web diseñada para ser el punto de encuentro defin
 
 En este repositorio encontrará la documentación previa acerca de las secciones más importantes para la funcionalidad correcta del backend.
 
+## Estructura del backend 🧱
+
+```bash
+FOODIERANK/
+├── src/
+│   ├── config/
+│   │   ├── db.js                   # Configuración de la conexión a MongoDB.
+│   │   ├── passport.js             # Configuración de JWT Passport para autenticación.
+│   │   └── ...
+│   ├── controllers/                # Lógica de manejo de peticiones (req/res).
+│   │   ├── authentication.controller.js
+│   │   ├── categorias_platos.controller.js
+│   │   ├── categorias_restaurantes.controller.js
+│   │   ├── platos.controller.js
+│   │   ├── ranking_avg.controller.js
+│   │   ├── resenas_platos.controller.js
+│   │   ├── resenas_restaurantes.controller.js
+│   │   └── usuarios.controller.js
+│   ├── DTOS/                       # Data Transfer Objects (Esquemas de validación con express-validator).
+│   │   ├── authenticationDTO.js
+│   │   ├── categoria_platoDTO.js
+│   │   ├── categoria_RestauranteDTO.js
+│   │   ├── platoDTO.js
+│   │   ├── reseña_platoDTO.js
+│   │   ├── reseña_RestauranteDTO.js
+│   │   └── usuarioDTO.js
+│   ├── middelewares/               # Funciones intermedias (Middleware).
+│   │   ├── authenticationMiddleware.js # Verifica el token JWT.
+│   │   └── validationDTO.js        # Aplica validación de DTOs.
+│   ├── routers/                    # Define las rutas de la API y asigna controladores.
+│   │   ├── authentication.routes.js
+│   │   ├── categorias_platos.routes.js
+│   │   ├── categorias_restaurantes.routes.js
+│   │   ├── platos.routes.js
+│   │   ├── ranking_avg.routes.js
+│   │   ├── resenas_platos.routes.js
+│   │   ├── resenas_restaurantes.routes.js
+│   │   └── usuarios.routes.js
+│   ├── services/                   # Lógica de negocio e interacción directa con la DB.
+│   │   ├── authentication.services.js
+│   │   ├── categorias_platos.services.js
+│   │   ├── categorias_restaurantes.services.js
+│   │   ├── platos.services.js
+│   │   ├── ranking_avg.js          # Lógica para cálculo de promedios.
+│   │   ├── resenas_platos.services.js
+│   │   ├── resenas_restaurantes.services.js
+│   │   └── usuarios.services.js
+│   ├── server.js                   # Archivo principal de Express (Configuración de middlewares y rutas).
+│   ├── seed.js                     # Script para poblar la base de datos con datos iniciales.
+│   ├── swagger.spec.js             # Definición de la documentación Swagger/OpenAPI.
+│   └── validationSchemas.js        # Esquemas de validación de MongoDB.
+├── package.json
+└── README.md
+
+```
+
 ## Planeación ☁️
 
 En esta sección se encuentran los modelos de bases de datos para la creación correcta de la base de datos y la estructuraci;ón de las entidades. Secci;ón muy importante ya que senta las bases del aplicativo web. 
