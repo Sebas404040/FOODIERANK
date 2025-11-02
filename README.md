@@ -342,3 +342,183 @@ db.createCollection('categorias_platos', {
 ```
 
 Esta colección almacena las diferentes categorías a las que pueden pertenecer los platos (por ejemplo: entradas, platos principales, postres, bebidas, etc.). Cada documento representa una categoría única con su identificador y nombre.
+
+## Endpoints importantes 🔗
+
+Esta sección detalla los servicios de la API REST, accesible en la base **`http://localhost:5000`**, organizados por su funcionalidad principal.
+
+### Módulo I: Autenticación y Perfil de Usuario (`/auth` & `/usuarios`)
+Gestión de acceso y perfiles de usuario en la plataforma.
+
+#### Autenticación
+* **Registro de Nuevo Usuario**
+  * `POST /auth/register`
+  * **Propósito:** Permite la creación de una cuenta con rol `user` o `admin`.
+  * **Ejemplo de Petición (Body):**
+    ```json
+    {
+      "username": "test_user",
+      "password": "password123",
+      "role": "user",
+      "correo": "test@example.com",
+      "telefono": "1234567890"
+    }
+    ```
+  * **Resultado (201 Creado):** Devuelve el perfil básico del usuario y establece el token JWT en una cookie HttpOnly.
+
+* **Inicio de Sesión**
+  * `POST /auth/login`
+  * **Propósito:** Autentica al usuario, devolviendo datos de sesión, incluido el `numericId` para referencias en reseñas.
+  * **Ejemplo de Petición (Body):**
+    ```json
+    {
+      "correo": "test@example.com",
+      "password": "password123"
+    }
+    ```
+  * **Resultado (200 OK):** Incluye el `numericId` y el `role` del usuario.
+
+#### Consulta de Usuarios
+* **Obtener Todos los Usuarios**
+  * `GET /usuarios`
+  * **Propósito:** Listado completo de todos los usuarios registrados.
+
+* **Obtener Usuario por ID Numérico**
+  * `GET /usuarios/:id`
+  * **Propósito:** Consulta los datos de un usuario específico utilizando su ID numérico.
+
+---
+
+### Módulo II: Restaurantes y Platos (`/restaurantes` & `/platos`)
+Gestión de la información base de la oferta gastronómica.
+
+#### Gestión de Restaurantes
+* **Listar Restaurantes**
+  * `GET /restaurantes`
+  * **Propósito:** Devuelve la lista completa de todos los restaurantes activos.
+
+* **Crear Restaurante**
+  * `POST /restaurantes` (Requiere Autenticación)
+  * **Ejemplo de Petición (Body):**
+    ```json
+    {
+      "nombre": "Nuevo Lugar",
+      "categoriaId": 4,
+      "direccion": "...",
+      "imagen_url": "...",
+      "descripcion": "..."
+    }
+    ```
+* **Actualizar Restaurante**
+  * `PATCH /restaurantes/:id` (Actualización Parcial - Requiere Auth)
+  * **Propósito:** Modifica campos específicos del restaurante.
+
+* **Eliminar Restaurante**
+  * `DELETE /restaurantes/:id` (Eliminación - Requiere Auth)
+  * **Propósito:** Elimina un restaurante del catálogo.
+
+#### Gestión de Platos
+* **Listar Platos**
+  * `GET /platos`
+  * **Propósito:** Devuelve la lista completa de todos los platos.
+
+* **Crear Plato**
+  * `POST /platos` (Requiere Autenticación)
+  * **Ejemplo de Petición (Body):**
+    ```json
+    {
+      "nombre": "Postre de Día",
+      "categoriaId": 3,
+      "descripcion": "...",
+      "precio": 5.00,
+      "id_restaurante": 1,
+      "imagen_url": "..."
+    }
+    ```
+* **Actualizar Plato**
+  * `PATCH /platos/:id` (Actualización Parcial - Requiere Auth)
+  * **Propósito:** Modifica campos específicos del plato.
+
+* **Eliminar Plato**
+  * `DELETE /platos/:id`
+  * **Propósito:** Elimina un plato del menú.
+
+---
+
+### Módulo III: Interacción y Reseñas (`/resenas_restaurantes` & `/resenas_platos`)
+Manejo del contenido generado por los usuarios (UGC).
+
+#### Reseñas de Restaurantes
+* **Crear Nueva Reseña**
+  * `POST /resenas_restaurantes`
+  * **Propósito:** Permite a un usuario enviar una calificación y comentario.
+  * **Ejemplo de Petición (Body):**
+    ```json
+    {
+      "restauranteId": 1,
+      "usuarioId": 6, 
+      "calificacion": 5,
+      "comentario": "Genial",
+      "fecha": "2025-11-02", 
+      "likes": 0
+    }
+    ```
+* **Obtener Reseñas por Restaurante**
+  * `GET /resenas_restaurantes/:id`
+  * **Propósito:** Devuelve todas las reseñas asociadas al ID del restaurante.
+
+* **Dar/Quitar Like**
+  * `PATCH /resenas_restaurantes/like/:id`
+  * **Propósito:** Permite a un usuario interactuar con la reseña de otro.
+  * **Petición (Body):** `{"id_usuario": 6}`
+
+* **Editar Reseña**
+  * `PATCH /resenas_restaurantes/:id`
+  * **Propósito:** Modifica la calificación y/o el comentario de la reseña.
+
+#### Reseñas de Platos
+* **Crear Nueva Reseña de Plato**
+  * `POST /resenas_platos`
+  * **Propósito:** Permite calificar un plato específico.
+  * **Petición (Body):** (Similar al de restaurantes, usando `platoId`).
+
+* **Obtener Reseñas por Plato**
+  * `GET /resenas_platos/:id`
+  * **Propósito:** Devuelve todas las reseñas asociadas al ID del plato.
+
+* **Editar Reseña de Plato**
+  * `PATCH /resenas_platos/:id`
+  * **Propósito:** Modifica la calificación y/o el comentario de la reseña.
+
+* **Dar/Quitar Like a Plato**
+  * `PATCH /resenas_platos/like/:id`
+  * **Petición (Body):** `{"id_usuario": 6}`
+
+---
+
+### Módulo IV: Categorías y Rankings (`/categorias_*` & `/ranking`)
+Estructura de datos y métricas de desempeño.
+
+#### Gestión de Categorías (Requiere Autenticación)
+* **Crear Categoría (Restaurantes/Platos)**
+  * `POST /categorias_restaurantes` | `POST /categorias_platos`
+  * **Ejemplo:** `{"nombre": "Comida Tailandesa"}`
+
+* **Listar Categorías**
+  * `GET /categorias_restaurantes` | `GET /categorias_platos`
+  * **Propósito:** Obtiene todas las categorías disponibles.
+
+* **Asignar Categoría a un Item**
+  * `PATCH /categorias_restaurantes/:id_cat` (Asigna categoría a un **restaurante** - Body: `{"id_restaurante": 5}`)
+  * `PATCH /categorias_platos/:id_cat` (Asigna categoría a un **plato** - Body: `{"id_plato": 12}`)
+
+#### Cálculo de Rankings
+* **Ranking de Restaurante**
+  * `GET /ranking/restaurantes/:id`
+  * **Propósito:** Devuelve el promedio de calificación para el restaurante.
+  * **Resultado (200 OK):** `4.25`
+
+* **Ranking de Platos**
+  * `GET /ranking/platos/:id`
+  * **Propósito:** Devuelve el promedio de calificación para el plato.
+  * **Resultado (200 OK):** `3.8`
