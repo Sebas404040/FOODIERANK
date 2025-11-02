@@ -616,6 +616,85 @@ Estructura de datos y métricas de desempeño.
   * **Propósito:** Devuelve el promedio de calificación para el plato.
   * **Resultado (200 OK):** `3.8`
 
+## Principios aplicados 🧰
+
+Los principios aplicados fueron los siguientes
+
+### Principio de responsabilidad única 1️⃣
+
+Este principio establece que un módulo debe tener solo una razón para cambiar. El código lo aplica de manera fuerte mediante una arquitectura de capas bien definida:
+
+- **Routers (*.routes.js):** Se encargan únicamente de definir las rutas y orquestar la secuencia de middlewares y controllers.
+
+- **Controllers (*.controller.js):** Su única responsabilidad es manejar la lógica de la capa HTTP, es decir, procesar la solicitud (req), invocar al servicio y enviar la respuesta con el código de estado apropiado (res.status(200).json(...)).
+
+- **Services (*.services.js):** Contienen la lógica de negocio y la interacción con la base de datos (persistencia), por ejemplo, obtenerRestaurantes o crearPlato.
+
+- **DTOs (*.DTO.js):** Se enfocan únicamente en la validación de los datos de entrada para cada entidad (ej. createPlatoDTO en platoDTO.js).
+
+### Principio de abierto/cerrado 2️⃣
+
+(Open/Closed Principle)
+
+El código está abierto a extensión, pero cerrado a modificación en componentes centrales:
+
+- **Lógica de Negocio/Validación:** Para cambiar la validación de una ruta, se extiende el array de validadores en el DTO (ej. restauranteDTO.js) y se añade a la ruta, sin necesidad de modificar el código del controller ni del middleware de validación genérico (validationDTO.js).
+
+- **Adición de Funcionalidad:** La adición de nuevas funcionalidades, como las rutas de ranking, se maneja creando nuevos módulos de enrutamiento (ranking_avg.routes.js) y agregándolos a server.js con app.use().
+
+### Principio de abierto/cerrado 4️⃣
+
+(Interface Segregation Principle)
+
+- **Módulos de Servicio Pequeños:** Los servicios se dividen en módulos muy específicos (las "interfaces"), como ranking_avg.js (solo para el cálculo de promedios), resenas_platos.services.js (solo para reseñas de platos), etc.
+
+- **Clientes Esbeltos:** Los controllers solo importan el módulo de servicio exacto que necesitan, asegurando que no dependan de funcionalidades que no utilicen (ej. restaurantes.controller.js solo importa restaurantes.services.js).
+
+## Trabajo Colaborativo y Gestión de Proyecto 📊
+
+### Herramientas de Gestión
+
+Para la gestión y seguimiento del desarrollo del backend, utilizamos ClickUp como nuestra herramienta principal de gestión de proyectos.
+### 🎯 Nuestro Espacio de Colaboración
+
+<div align="center">
+
+<table align="center">
+<tr>
+<td align="center">
+<h2>🔄 Gestión Ágil con ClickUp 🚀</h2>
+
+[![Explora Nuestro Proyecto](https://img.shields.io/badge/ClickUp-7B68EE?style=for-the-badge&logo=clickup&logoColor=white&labelColor=000000)](https://sharing.clickup.com/90132667950/b/h/6-901321762897-2/cf7625048836b0b)
+
+</td>
+</tr>
+<tr>
+<td align="center">
+
+| 📊 Métricas | 📝 Documentación | 🤝 Colaboración | ⚡ Eficiencia |
+|:-----------:|:----------------:|:---------------:|:-------------:|
+| Metricas de progreso | Swagger de API | Chat en equipo | Automatización |
+
+</td>
+</tr>
+</table>
+
+<h3>💫 Únete a la Experiencia FoodieRank</h3>
+
+[![Estado del Proyecto](https://img.shields.io/badge/Estado-COMPLETADO-2ea44f?style=for-the-badge)](https://sharing.clickup.com/90132667950/b/h/6-901321762897-2/cf7625048836b0b)
+
+</div>
+
+### Metodología de Trabajo
+
+Seguimos una metodología ágil basada en:
+
+- **Sprints de 2 semanas**
+- **Daily meetings** para seguimiento
+- **Code reviews** obligatorios
+- **Integración continua** con pruebas automatizadas
+- **Documentación incremental**
+
 ## Conclusión ✅
 
 La culminación del desarrollo del backend de FoodieRank establece una base robusta, segura y escalable para la aplicación. Mediante la adopción de tecnologías modernas y una arquitectura modular, se ha logrado construir la base de dato, arquitecturas de API y lógica que soporta todas las funcionalidades de la plataforma.
