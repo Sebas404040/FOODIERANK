@@ -2,7 +2,8 @@ import {
     obtenerCategoriasPlatos,
     crearCategoriaPlato,
     eliminarCategoriaPlato,
-    actualizarCategoriaPlato
+    actualizarCategoriaPlato,
+    obtenerCategoriaPlatoPorId
 } from "../services/categorias_platos.services.js";
 
 export async function getCategoriasPlatos(req, res) {
@@ -19,6 +20,16 @@ export async function postCategoriaPlato(req, res) {
         const { nombre } = req.body;
         const resultado = await crearCategoriaPlato(nombre);
         res.status(201).json({ mensaje: "Categoría de plato creada exitosamente", resultado });
+    } catch (error) {
+        res.status(500).json({ mensaje: error.message });
+    }
+}
+
+export async function getCategoriaPlatoPorId(req, res) {
+    try {
+        const id = parseInt(req.params.id);
+        const categoria = await obtenerCategoriaPlatoPorId(id);
+        res.status(200).json(categoria);
     } catch (error) {
         res.status(500).json({ mensaje: error.message });
     }

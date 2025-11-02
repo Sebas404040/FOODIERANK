@@ -11,6 +11,15 @@ export async function obtenerCategoriasRestaurantes() {
     }
 }
 
+export async function obtenerCategoriaRestaurantePorId(id) {
+    try {
+        const categoria = await obtenerBD().collection(COLECCION_CATEGORIAS_RESTAURANTES).findOne({ id: id });
+        return categoria;
+    } catch (error) {
+        throw new Error("Error al obtener la categoría de restaurante por ID: " + error.message);
+    }
+}
+
 export async function crearCategoriaRestaurante(categoria) {
     try {
 

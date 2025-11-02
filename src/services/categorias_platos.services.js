@@ -11,6 +11,15 @@ export async function obtenerCategoriasPlatos() {
     }
 }
 
+export async function obtenerCategoriaPlatoPorId(id) {
+    try {
+        const categoria = await obtenerBD().collection(COLECCION_CATEGORIAS_PLATOS).findOne({ id: id });
+        return categoria;
+    } catch (error) {
+        throw new Error("Error al obtener la categoría de plato por ID: " + error.message);
+    }
+}
+
 export async function crearCategoriaPlato(categoria) {
     try {
 
