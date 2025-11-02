@@ -59,6 +59,23 @@ export async function eliminarCategoriaPlato(id) {
     }
 }
 
+export async function editarCategoriaPlato(id, nombre) {
+    try {
+
+        const categoria = await obtenerBD().collection(COLECCION_CATEGORIAS_PLATOS).findOne({ id: id });
+
+        if (!categoria) {
+            throw new Error("Categoría de plato no encontrada");
+        }
+        return await obtenerBD().collection(COLECCION_CATEGORIAS_PLATOS).updateOne(
+            { id: id },
+            { $set: { nombre: nombre } }
+        );
+    } catch (error) {
+        throw new Error("Error al actualizar la categoría de plato: " + error.message);
+    }
+}
+
 export async function actualizarCategoriaPlato(id_plato, id_categoriaActualizada) {
     try {
 

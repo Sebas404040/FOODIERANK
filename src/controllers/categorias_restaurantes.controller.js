@@ -3,13 +3,25 @@ import {
     crearCategoriaRestaurante,
     eliminarCategoriaRestaurante,
     actualizarCategoriaRestaurante,
-    obtenerCategoriaRestaurantePorId
+    obtenerCategoriaRestaurantePorId,
+    editarCategoriaRestaurante
 } from "../services/categorias_restaurantes.services.js";
 
 export async function getCategoriasRestaurantes(req, res) {
     try {
         const categorias = await obtenerCategoriasRestaurantes();
         res.status(200).json(categorias);
+    } catch (error) {
+        res.status(500).json({ mensaje: error.message });
+    }
+}
+
+export async function actCategoriaRestaurante(req, res) {
+    try {
+        const { nombre } = req.body;
+        const id = parseInt(req.params.id);
+        const resultado = await editarCategoriaRestaurante(id, nombre);
+        res.status(200).json({ mensaje: "Categoría de restaurante actualizada exitosamente", resultado });
     } catch (error) {
         res.status(500).json({ mensaje: error.message });
     }

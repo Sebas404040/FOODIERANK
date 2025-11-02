@@ -3,13 +3,25 @@ import {
     crearCategoriaPlato,
     eliminarCategoriaPlato,
     actualizarCategoriaPlato,
-    obtenerCategoriaPlatoPorId
+    obtenerCategoriaPlatoPorId,
+    editarCategoriaPlato
 } from "../services/categorias_platos.services.js";
 
 export async function getCategoriasPlatos(req, res) {
     try {
         const categorias = await obtenerCategoriasPlatos();
         res.status(200).json(categorias);
+    } catch (error) {
+        res.status(500).json({ mensaje: error.message });
+    }
+}
+
+export async function actCategoriaPlato(req, res) {
+    try {
+        const { nombre } = req.body;
+        const id = parseInt(req.params.id);
+        const resultado = await editarCategoriaPlato(id, nombre);
+        res.status(200).json({ mensaje: "Categoría de plato actualizada exitosamente", resultado });
     } catch (error) {
         res.status(500).json({ mensaje: error.message });
     }

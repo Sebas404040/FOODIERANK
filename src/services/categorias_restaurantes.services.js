@@ -11,6 +11,24 @@ export async function obtenerCategoriasRestaurantes() {
     }
 }
 
+export async function editarCategoriaRestaurante(id, nombre) {
+    try {
+
+        const categoria = await obtenerBD().collection(COLECCION_CATEGORIAS_RESTAURANTES).findOne({ id: id });
+
+        if (!categoria) {
+            throw new Error("Categoría de restaurante no encontrada");
+        }
+        return await obtenerBD().collection(COLECCION_CATEGORIAS_RESTAURANTES).updateOne(
+            { id: id },
+            { $set: { nombre: nombre } }
+        );
+    } catch (error) {
+        throw new Error("Error al actualizar la categoría de restaurante: " + error.message);
+    }
+}
+
+
 export async function obtenerCategoriaRestaurantePorId(id) {
     try {
         const categoria = await obtenerBD().collection(COLECCION_CATEGORIAS_RESTAURANTES).findOne({ id: id });
