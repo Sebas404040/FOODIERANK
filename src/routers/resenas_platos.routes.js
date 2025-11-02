@@ -9,7 +9,7 @@ router.get("/", getResenasPlatos);
 router.get("/:id", getResenasPlatoPorId);
 router.post("/", createReseñaPlatoDTO, validationDTO, postResenaPlato);
 router.delete("/:id", deleteResenaPlato);
-router.put("/like/:id", putLikeResenaPlato);
+router.patch("/like/:id", putLikeResenaPlato);
 router.patch("/:id", patchEditresenaPlato);
 
 
