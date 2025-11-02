@@ -5,10 +5,12 @@ export async function registrarUsuario_controller(req, res, next) {
         const { token, ...usuario } = await registrarUsuarioService(req.body);
 
         res.cookie('token', token, {
-            httpOnly: true, // La cookie no es accesible por JavaScript
-            secure: process.env.NODE_ENV === 'production', // Solo enviar en HTTPS en producción
-            sameSite: 'strict', // Mitiga ataques CSRF
-            maxAge: 1000 * 60 * 60 * 24 * 30 // 30 días
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', 
+            sameSite: 'Lax', 
+            maxAge: 1000 * 60 * 60 * 24 * 30, 
+            path: '/',
+            domain: (process.env.NODE_ENV !== 'production' && req.hostname === '127.0.0.1') ? '127.0.0.1' : undefined // Asegura el dominio correcto en desarrollo
         });
 
         res.status(201).json({
@@ -27,8 +29,10 @@ export async function iniciarSesion_controller(req, res, next) {
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            maxAge: 1000 * 60 * 60 * 24 * 30 // 30 días
+            sameSite: 'Lax', 
+            maxAge: 1000 * 60 * 60 * 24 * 30,
+            path: '/',
+            domain: (process.env.NODE_ENV !== 'production' && req.hostname === '127.0.0.1') ? '127.0.0.1' : undefined 
         });
 
         res.status(200).json({

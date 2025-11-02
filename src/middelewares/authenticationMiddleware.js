@@ -4,7 +4,7 @@ import { ObjectId } from "mongodb";
 
 export async function autenticacionMidleware(req, res, next) {
     try {
-        const { token } = req.cookies;
+        const token = req.cookies.token; 
 
         if (!token) {
             return res.status(401).json({ mensaje: "No autorizado. No se proporcionó token." });

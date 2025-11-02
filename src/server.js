@@ -20,11 +20,10 @@ import routerRanking from './routers/ranking_avg.routes.js';
 const app = express();
 
 const allowedOrigins = [
-    'http://127.0.0.1:5502',
-    'http://127.0.0.1:5501',
+    'http://localhost:5502', 
     'http://localhost:5501',
-    'http://127.0.0.1:5500',
-    'http://localhost:5500'
+    'http://localhost:5500',
+    'http://localhost:5000' 
 ];
 
 const corsOptions = {
@@ -35,7 +34,7 @@ const corsOptions = {
       callback(new Error(`El origen ${origin} no está permitido por CORS.`));
     }
   },
-  credentials: true, 
+  credentials: true,
   optionsSuccessStatus: 200
 };
 
@@ -45,7 +44,7 @@ app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
 const limiter = rateLimit({
-    windowMs: 60 * 1000, // 1 minuto
+    windowMs: 60 * 1000, 
     max: 100,
     message: 'Demasiadas peticiones desde esta IP, por favor intenta de nuevo más tarde.'
 });
