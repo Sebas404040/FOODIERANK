@@ -84,7 +84,7 @@ export async function obtenerPlatoPorId(id) {
         if (!plato) {
             throw new Error("Plato no encontrado");
         }
-        return platos;
+        return plato;
     } catch (error) {
         throw new Error("Error al obtener el plato: " + error.message);
     }

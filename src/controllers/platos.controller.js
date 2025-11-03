@@ -18,12 +18,20 @@ export async function getPlatos(req, res) {
 export async function postPlato(req, res) {
     try {
         const datosPlato = req.body;
-        // Las conversiones de tipo y validaciones ya son manejadas por el DTO y el middleware.
         const resultado = await crearPlato(datosPlato);
         res.status(201).json({ mensaje: "Plato creado exitosamente", resultado });
     } catch (error) {
-        const status = error.message.includes("obligatorios") || error.message.includes("existe") ? 400 : 500;
-        res.status(status).json({ mensaje: error.message });
+        let status = 500;
+        
+        const errorMessage = error.message;
+
+        if (errorMessage.includes("obligatorios") || errorMessage.includes("existe")) {
+            status = 400;
+        } else if (errorMessage.includes("BSON") || errorMessage.includes("wrong type")) {
+            status = 400; 
+        }
+        
+        res.status(status).json({ mensaje: errorMessage });
     }
 }
 
