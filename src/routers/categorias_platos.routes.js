@@ -17,9 +17,7 @@ router.get("/", getCategoriasPlatos);
 router.get("/:id", getCategoriaPlatoPorId);
 router.post("/", autenticacionMidleware,createCategoriaPlatoDTO, validationDTO, postCategoriaPlato);
 router.delete("/:id", autenticacionMidleware,deleteCategoriaPlato);
+router.patch("/:id", autenticacionMidleware, updateCategoriaPlatoDTO, validationDTO, actCategoriaPlato);
 
-router.patch("/nombre/:id", autenticacionMidleware, updateCategoriaPlatoDTO, validationDTO, actCategoriaPlato);
-
-router.patch("/asignar/:id_categoriaActualizada", autenticacionMidleware, patchCategoriaPlato);
 
 export default router;
