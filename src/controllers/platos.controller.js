@@ -18,11 +18,7 @@ export async function getPlatos(req, res) {
 export async function postPlato(req, res) {
     try {
         const datosPlato = req.body;
-        
-        datosPlato.categoriaId = parseInt(datosPlato.categoriaId);
-        datosPlato.id_restaurante = parseInt(datosPlato.id_restaurante);
-        datosPlato.precio = parseFloat(datosPlato.precio);
-
+        // Las conversiones de tipo y validaciones ya son manejadas por el DTO y el middleware.
         const resultado = await crearPlato(datosPlato);
         res.status(201).json({ mensaje: "Plato creado exitosamente", resultado });
     } catch (error) {
