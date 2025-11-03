@@ -18,10 +18,16 @@ export async function getPlatos(req, res) {
 export async function postPlato(req, res) {
     try {
         const datosPlato = req.body;
+        
+        datosPlato.categoriaId = parseInt(datosPlato.categoriaId);
+        datosPlato.id_restaurante = parseInt(datosPlato.id_restaurante);
+        datosPlato.precio = parseFloat(datosPlato.precio);
+
         const resultado = await crearPlato(datosPlato);
         res.status(201).json({ mensaje: "Plato creado exitosamente", resultado });
     } catch (error) {
-        res.status(500).json({ mensaje: error.message });
+        const status = error.message.includes("obligatorios") || error.message.includes("existe") ? 400 : 500;
+        res.status(status).json({ mensaje: error.message });
     }
 }
 
