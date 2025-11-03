@@ -19,8 +19,14 @@ import routerRanking from './routers/ranking_avg.routes.js';
 
 const app = express();
 
-const allowedOrigins =['http://localhost:5502', 'http://localhost:5501', 'http://localhost:5500', 'http://localhost:5000', 'https://davisson-adriel.github.io/FRONT_FOOD/', 'https://davisson-adriel.github.io']
-
+const allowedOrigins = [
+    'http://localhost:5502', 
+    'http://localhost:5501', 
+    'http://localhost:5500', 
+    'http://localhost:5000', 
+    'https://davisson-adriel.github.io/front_food', // Variante con el nombre del repo
+    'https://davisson-adriel.github.io'           // ⬅️ Variante de dominio raíz que está faltando
+];
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
