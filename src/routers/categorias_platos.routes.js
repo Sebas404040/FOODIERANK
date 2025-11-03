@@ -7,7 +7,7 @@ import {
     deleteCategoriaPlato, 
     getCategoriaPlatoPorId, 
     actCategoriaPlato,
-    patchCategoriaPlato // Asegura esta importación
+    patchCategoriaPlato 
 } from "../controllers/categorias_platos.controller.js";
 import { autenticacionMidleware } from "../middelewares/authenticationMiddleware.js";
 
@@ -17,7 +17,9 @@ router.get("/", getCategoriasPlatos);
 router.get("/:id", getCategoriaPlatoPorId);
 router.post("/", autenticacionMidleware,createCategoriaPlatoDTO, validationDTO, postCategoriaPlato);
 router.delete("/:id", autenticacionMidleware,deleteCategoriaPlato);
+
 router.patch("/nombre/:id", autenticacionMidleware, updateCategoriaPlatoDTO, validationDTO, actCategoriaPlato);
+
 router.patch("/asignar/:id_categoriaActualizada", autenticacionMidleware, patchCategoriaPlato);
 
 export default router;

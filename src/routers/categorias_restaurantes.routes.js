@@ -7,7 +7,7 @@ import {
     deleteCategoriaRestaurante, 
     actCategoriaRestaurante, 
     getCategoriaRestaurantePorId,
-    patchCategoriaRestaurante // Asegura esta importación
+    patchCategoriaRestaurante 
 } from "../controllers/categorias_restaurantes.controller.js";
 import { autenticacionMidleware } from "../middelewares/authenticationMiddleware.js";
 
