@@ -10,7 +10,7 @@ router.get("/", getCategoriasRestaurantes);
 router.get("/:id", getCategoriaRestaurantePorId);
 router.post("/", autenticacionMidleware, crearCategoria_RestauranteDTO, validationDTO, postCategoriaRestaurante);
 router.delete("/:id", autenticacionMidleware, deleteCategoriaRestaurante);
-router.patch("/:id", autenticacionMidleware, actualizarCategoria_RestauranteDTO, validationDTO, actCategoriaRestaurante);
+router.patch("/nombre/:id", autenticacionMidleware, actualizarCategoria_RestauranteDTO, validationDTO, actCategoriaRestaurante);
 
 export default router;
 
