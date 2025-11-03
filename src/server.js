@@ -24,8 +24,8 @@ const allowedOrigins = [
     'http://localhost:5501', 
     'http://localhost:5500', 
     'http://localhost:5000', 
-    'https://davisson-adriel.github.io/front_food', // Variante con el nombre del repo
-    'https://davisson-adriel.github.io'           // ⬅️ Variante de dominio raíz que está faltando
+    'https://davisson-adriel.github.io/front_food', 
+    'https://davisson-adriel.github.io'           
 ];
 const corsOptions = {
   origin: function (origin, callback) {
