@@ -7,7 +7,7 @@ export async function registrarUsuario_controller(req, res, next) {
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production', 
-            sameSite: 'none', 
+            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
             maxAge: 1000 * 60 * 60 * 24 * 30, 
             path: '/',
             signed: true,
@@ -30,7 +30,7 @@ export async function iniciarSesion_controller(req, res, next) {
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'None', 
+            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
             maxAge: 1000 * 60 * 60 * 24 * 30,
             path: '/',
             signed: true,
