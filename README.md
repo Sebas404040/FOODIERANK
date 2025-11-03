@@ -685,6 +685,10 @@ Para la gestión y seguimiento del desarrollo del backend, utilizamos ClickUp co
 
 </div>
 
+## videos 📷
+
+https://drive.google.com/drive/folders/1OV5cuRo293_W1R4XjBPh9j6BTwkmZlPp?usp=sharing
+
 ### Metodología de Trabajo
 
 Seguimos una metodología ágil basada en:
