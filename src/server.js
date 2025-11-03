@@ -19,7 +19,7 @@ import routerRanking from './routers/ranking_avg.routes.js';
 
 const app = express();
 
-const allowedOrigins =['http://localhost:5502', 'http://localhost:5501', 'http://localhost:5500', 'http://localhost:5000', 'https://davisson-adriel.github.io/FRONT_FOOD']
+const allowedOrigins =['http://localhost:5502', 'http://localhost:5501', 'http://localhost:5500', 'http://localhost:5000', 'https://davisson-adriel.github.io/FRONT_FOOD/', 'https://davisson-adriel.github.io']
 
 const corsOptions = {
   origin: function (origin, callback) {
