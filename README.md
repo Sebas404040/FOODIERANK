@@ -703,6 +703,14 @@ Seguimos una metodología ágil basada en:
 
 La culminación del desarrollo del backend de FoodieRank establece una base robusta, segura y escalable para la aplicación. Mediante la adopción de tecnologías modernas y una arquitectura modular, se ha logrado construir la base de dato, arquitecturas de API y lógica que soporta todas las funcionalidades de la plataforma.
 
+## Link frontend 
+
+https://github.com/Davisson-Adriel/FRONT_FOOD
+
+## Ingreso al sitio web
+
+https://davisson-adriel.github.io/FRONT_FOOD/
+
 ## Autores 🥷 🥷
 
 - Davisson Adriel Román (Product Owner, Developer)
