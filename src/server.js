@@ -16,6 +16,7 @@ import semver from 'semver';
 import swaggerUi from 'swagger-ui-express'; 
 import swaggerSpec from './swagger.spec.js';
 import routerRanking from './routers/ranking_avg.routes.js';
+import routerfav from './routers/favoritos.routes.js';
 
 const app = express();
 
@@ -61,7 +62,8 @@ app.use('/restaurantes', restaurantesRouter);
 app.use('/usuarios', usuariosRouter);
 app.use('/auth', authenticationRouter);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use('/ranking', routerRanking)
+app.use('/ranking', routerRanking);
+app.use('/favoritos', routerfav);
 
 app.get("/health", (req, res) => {
     res.status(200).json({ message: "Backend Activo" });

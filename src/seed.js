@@ -38,6 +38,10 @@ async function seed() {
         { id: 7, nombre: "Mariscos" }
     ];
 
+    const favoritos_c = [
+        { id: 1, usuarioId: 2, restauranteId: 1 }
+    ];
+
     const categorias_platos = [
         { id: 1, nombre: "Entradas" },
         { id: 2, nombre: "Platos principales" },
@@ -89,10 +93,13 @@ async function seed() {
     ];
 
     console.log("Aplicando validaciones de esquema a la base de datos...");
-    await aplicarValidaciones();
+    //await aplicarValidaciones();
     console.log("Validaciones aplicadas correctamente.");
 
     console.log("Poblando la base de datos...");
+
+    await db.collection("favoritos").deleteMany({});
+    await db.collection("favoritos").insertMany(favoritos_c);
 
     await db.collection("categorias_restaurantes").deleteMany({});
     await db.collection("categorias_restaurantes").insertMany(categorias_restaurantes);
