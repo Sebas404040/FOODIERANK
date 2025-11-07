@@ -2,6 +2,7 @@ import { obtenerBD } from "../config/db.js";
 
 const COLECCION_RESENAS_RESTAURANTES = "resenas_restaurantes";
 const COLECCION_RESTAURANTES = "restaurantes";
+const COLECCION_USUARIOS = "usuarios"
 
 export async function obtenerResenasRestaurantes() {
     try {
@@ -32,7 +33,14 @@ export async function agregarResenaRestaurante(datos_resena) {
             likes: likes
         };
 
-        return await obtenerBD().collection(COLECCION_RESENAS_RESTAURANTES).insertOne(nuevaResena);
+
+        const notificacion = {
+            id_restaurante: restauranteId,
+            visto: false
+        }
+
+        const resultado = await obtenerBD().collection(COLECCION_USUARIOS).updateOne({id: usuarioId}, {notificacion})
+        return await obtenerBD().collection(COLECCION_RESENAS_RESTAURANTES).insertOne(nuevaResena), resultado;
 
     } catch (error) {
         console.error("Error detallado en agregarResenaRestaurante:", error);
@@ -129,5 +137,20 @@ export async function actualizarResenaRestaurante(id, datosActualizados) {
         if (resultado.matchedCount === 0) throw new Error("Reseña no encontrada.");
     } catch (error) {
         throw new Error("Error al actualizar la reseña de restaurante: " + error.message);
+    }
+}
+
+export async function cambiarVisto(id) {
+    try {
+        if (!id || !id_usuario) {
+            throw new Error("El ID de la notificacion es obligatoria.");
+        }
+        
+        const resultado = await obtenerBD().collection(COLECCION_RESTAURANTES).updateOne(
+            {id: id},
+            {$set: visto}
+        )
+    } catch (error) {
+        
     }
 }

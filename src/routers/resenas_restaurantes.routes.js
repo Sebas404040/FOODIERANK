@@ -7,7 +7,7 @@ const router = Router();
 
 router.get("/", getResenasRestaurantes);
 router.get("/:id", getResenasRestaurantePorId);
-router.post("/", createReseñaRestauranteDTO, validationDTO, postResenaRestaurante);
+router.post("/", postResenaRestaurante);
 router.patch("/:id", updateReseñaRestauranteDTO, validationDTO, patchResenaRestaurante);
 router.delete("/:id", deleteResenaRestaurante);
 router.patch("/like/:id", putLikeResenaPlato);
